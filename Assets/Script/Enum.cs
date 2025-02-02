@@ -1,4 +1,4 @@
-/*public enum seed
+/*public enum Seed
 {
     // 성장 관련
     coin = 100,
