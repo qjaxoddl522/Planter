@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7562dd0c6ceb514d8ff1823a5b962e6, type: 3}
+  m_Name: Nut
+  m_EditorClassIdentifier: 
+  seedID: 4
+  unlockPrice: 0
+  price: 1
+  hp: 10
+  growthTime: 5
+  abilityPeriod: 12
+  abilityPower: 13
+  seedSprite: {fileID: -7866928900747384746, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
+  plantSprite: {fileID: 3600830470828440791, guid: 298ce5c80b037a54c9c27281766c5ba8, type: 3}

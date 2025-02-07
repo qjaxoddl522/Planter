@@ -38,11 +38,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Enemy
+    uniqueID: 255024373
+    locked: 0
   - name: Background UI
     uniqueID: 3930152509
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Plant
+    uniqueID: 3860618785
+    locked: 0
+  - name: Front UI
+    uniqueID: 2279198223
     locked: 0
   m_RenderingLayers:
   - Default

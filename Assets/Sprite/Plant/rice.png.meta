@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 35c24d6463e927c498c5255892adb1a5
+guid: cd95079427e74ec4db52b9650b95a148
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5027946569022094460
-    second: Sprout_0
+      213: 9135130128162984572
+    second: rice_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprout_0
+      name: rice_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 4
-        width: 14
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        x: 3
+        y: 0
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c7cb43ce3cad6c540800000000000000
-      internalID: 5027946569022094460
+      spriteID: c729f1a937086ce70800000000000000
+      internalID: 9135130128162984572
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f04456127ff22f14da73c3b9bce223b1
+    spriteID: 947df25e52206bf4f96be31496747c2f
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sprout_0: 5027946569022094460
+      rice_0: 9135130128162984572
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

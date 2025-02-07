@@ -22,7 +22,6 @@ public enum Seed
 {
     // 성장 관련
     coinInc,
-    coinBoom,
 
     // 방어 관련
     defMelee,
@@ -32,5 +31,4 @@ public enum Seed
 
     // 버프 관련
     bufAttack,
-    bufHealth,
 }

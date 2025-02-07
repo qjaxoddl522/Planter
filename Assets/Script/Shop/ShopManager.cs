@@ -14,13 +14,13 @@ public interface IShopManager : IManager
 
 public class ShopManager : MonoBehaviour, IShopManager
 {
-    public int shopLen { get; set; } = 3;
+    public int shopLen { get; set; } = 5;
     public List<Seed> seedList = new List<Seed>();
     List<GameObject> seedObj = new List<GameObject>();
 
     [SerializeField] Transform shopTransform;
     [SerializeField] GameObject buySeedPrefab;
-    [SerializeField] Sprite[] seedSprites;
+    [SerializeField] PlantData[] plantData;
     ICoinManager _coinManager;
     
     public void Init()
@@ -32,7 +32,9 @@ public class ShopManager : MonoBehaviour, IShopManager
     public void CreateShop()
     {
         seedList.Clear();
-        List<Seed> seedPool = Enum.GetValues(typeof(Seed)).Cast<Seed>().ToList();
+        List<Seed> seedPool = plantData
+            .Select(p => p.seedID)
+            .ToList();
         for (int i = 0; i < shopLen; i++)
         {
             Seed seed = seedPool[Random.Range(0, seedPool.Count)];
@@ -45,9 +47,8 @@ public class ShopManager : MonoBehaviour, IShopManager
             var seedInstance = Instantiate(buySeedPrefab, shopTransform);
             seedObj.Add(seedInstance);
             seedInstance.name = seedList[i].ToString();
-            seedInstance.GetComponent<SpriteRenderer>().sprite = seedSprites[(int)seedList[i]];
             seedInstance.GetComponent<ShopSeed>()._ShopManager = this;
-            seedInstance.GetComponent<ShopSeed>().seedID = seedList[i];
+            seedInstance.GetComponent<ShopSeed>().plantData = plantData[(int)seedList[i]];
             seedInstance.transform.position =new Vector3(
                 -seedList.Count / 2 + i + (seedList.Count % 2 == 0 ? 0.5f : 0 ),
                 seedInstance.transform.position.y);

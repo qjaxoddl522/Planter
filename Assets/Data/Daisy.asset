@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7562dd0c6ceb514d8ff1823a5b962e6, type: 3}
+  m_Name: Daisy
+  m_EditorClassIdentifier: 
+  seedID: 0
+  unlockPrice: 0
+  price: 1
+  hp: 10
+  growthTime: 5
+  abilityPeriod: 12
+  abilityPower: 13
+  seedSprite: {fileID: -62575824, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
+  plantSprite: {fileID: 8211628435803740865, guid: 3526b1d1d7aa87543830fc80882e34de, type: 3}
+  plantPrefab: {fileID: 1338233739055652105, guid: fbf73497657e5e840b3551510d71195c, type: 3}

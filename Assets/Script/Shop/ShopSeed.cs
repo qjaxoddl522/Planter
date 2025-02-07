@@ -1,11 +1,10 @@
 using DG.Tweening;
-using System.Linq;
 using UnityEngine;
 
 public interface IShopSeed
 {
     public IShopManager _ShopManager { get; set; }
-    Seed seedID { get; set; }
+    PlantData plantData { get; set; }
 }
 
 public class ShopSeed : MonoBehaviour, IShopSeed
@@ -15,13 +14,14 @@ public class ShopSeed : MonoBehaviour, IShopSeed
         get;
         set;
     }
-    public Seed seedID { get; set; }
+    public PlantData plantData { get; set; }
     bool isGrabbing = false;
     Vector2 initPos;
 
     void Start()
     {
         initPos = transform.position;
+        GetComponent<SpriteRenderer>().sprite = plantData.seedSprite;
     }
 
     void Update()
@@ -61,10 +61,10 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                     }
                 }
 
-                if (plantSpot != null && plantSpot.MyPlant == null && _ShopManager.TryBuy(5))
+                if (plantSpot != null && plantSpot.MyPlant == null && _ShopManager.TryBuy(plantData.price))
                 {
                     Debug.Log(name + " ±¸¸Å!");
-                    plantSpot.Plant(seedID);
+                    plantSpot.Plant(plantData);
                     _ShopManager.RefreshShop();
                 }
                 else
