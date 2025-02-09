@@ -17,9 +17,10 @@ public class Sprout : MonoBehaviour, IPlantable
     
     SpriteRenderer plantSpriteRenderer;
     SpriteRenderer sproutSpriteRenderer;
-    float plantSpriteHalfHeight;
+    float plantSpriteHeight;
     public PlantData plantData { get; set; }
     GrowthController growthController;
+    bool isDirectionLeft;
 
     void Awake()
     {
@@ -32,29 +33,32 @@ public class Sprout : MonoBehaviour, IPlantable
     {
         if (plantSpriteRenderer != null)
         {
-            plantSpriteHalfHeight = plantSpriteRenderer.bounds.size.y / 2f;
+            plantSpriteRenderer.sprite = plantData.plantSprite;
+            plantSpriteHeight = plantSpriteRenderer.bounds.size.y;
             plantSpriteTransform.position = new Vector3(
                 plantSpriteTransform.position.x,
-                plantSpriteTransform.position.y - plantSpriteHalfHeight,
+                plantSpriteTransform.position.y - plantSpriteHeight,
                 plantSpriteTransform.position.z);
-            plantSpriteRenderer.sprite = plantData.plantSprite;
+
+            int depth = -(int)(transform.parent.position.y + 0.5f);
+            plantSpriteRenderer.sortingOrder = depth;
+            sproutSpriteRenderer.sortingOrder = depth + 1;
+            spriteMask.frontSortingOrder = depth;
+            spriteMask.backSortingOrder = depth - 1;
+
+            isDirectionLeft = transform.parent.position.x < 0;
+            plantSpriteRenderer.flipX = isDirectionLeft;
         }
 
         growthController.growthDuration = plantData.growthTime;
         growthController.OnGrowthHalf += HandleGrowthHalf;
         growthController.OnGrowthComplete += HandleGrowthComplete;
-
-        int depth = -(int)(transform.parent.position.y + 0.5f);
-        plantSpriteRenderer.sortingOrder = depth;
-        sproutSpriteRenderer.sortingOrder = depth;
-        spriteMask.frontSortingOrder = depth;
-        spriteMask.backSortingOrder = depth - 1;
     }
 
     void HandleGrowthHalf()
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(spriteTransform.DOMoveY(spriteTransform.position.y + plantSpriteHalfHeight, growAnimationDuration).SetEase(Ease.OutCubic))
+        seq.Append(spriteTransform.DOMoveY(spriteTransform.position.y + plantSpriteHeight / 2, growAnimationDuration).SetEase(Ease.OutCubic))
            .Insert(0, 
            spriteTransform.DOScale(0.9f, growAnimationDuration / 4).SetEase(Ease.OutCubic))
            .Insert(growAnimationDuration / 4, 
@@ -66,15 +70,20 @@ public class Sprout : MonoBehaviour, IPlantable
 
     void HandleGrowthComplete()
     {
-        Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + plantSpriteHalfHeight * 2, transform.position.z);
+        Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + plantSpriteHeight, transform.position.z);
         sproutSpriteTransform.GetComponent<SproutAway>().isAway = true;
         plantSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
-        spriteTransform.DOJump(targetPos, 1f, 1, 0.5f).SetEase(Ease.Linear).OnComplete(Plant);
+        spriteTransform.DOJump(targetPos, 1f, 1, 1f).SetEase(Ease.Linear).OnComplete(Plant);
     }
 
     void Plant()
     {
-        Debug.Log("식물 심기");
+        var plant = Instantiate(plantData.plantPrefab);
+        plant.transform.SetParent(transform.parent);
+        plant.transform.position = transform.position;
+        plant.GetComponent<PlantBase>().isDirectionLeft = isDirectionLeft;
+        plant.GetComponent<PlantBase>().plantData = plantData;
+        Destroy(gameObject);
     }
 }
 

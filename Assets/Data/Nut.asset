@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Nut
   m_EditorClassIdentifier: 
   seedID: 4
-  unlockPrice: 0
+  unlockPrice: 3
   price: 1
   hp: 10
   growthTime: 5
@@ -21,3 +21,4 @@ MonoBehaviour:
   abilityPower: 13
   seedSprite: {fileID: -7866928900747384746, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: 3600830470828440791, guid: 298ce5c80b037a54c9c27281766c5ba8, type: 3}
+  plantPrefab: {fileID: 1338233739055652105, guid: fbf73497657e5e840b3551510d71195c, type: 3}

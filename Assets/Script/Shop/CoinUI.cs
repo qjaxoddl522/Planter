@@ -1,21 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-public interface ICoinUI : IManager
+public class CoinUI : MonoBehaviour
 {
-    void UpdateUI(string amount);
-}
-
-public class CoinUI : MonoBehaviour, ICoinUI
-{
-    SystemLoader loader;
     [SerializeField] TextMeshProUGUI coinText;
-
-    void OnEnable()
-    {
-        loader = SystemLoader.Instance;
-        loader.Register<ICoinUI>(this);
-    }
 
     public void Init()
     {

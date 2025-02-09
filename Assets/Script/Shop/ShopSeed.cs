@@ -9,12 +9,9 @@ public interface IShopSeed
 
 public class ShopSeed : MonoBehaviour, IShopSeed
 {
-    public IShopManager _ShopManager
-    {
-        get;
-        set;
-    }
+    public IShopManager _ShopManager { get; set; }
     public PlantData plantData { get; set; }
+    public bool isAvailable { get; private set; }
     bool isGrabbing = false;
     Vector2 initPos;
 
@@ -22,6 +19,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
     {
         initPos = transform.position;
         GetComponent<SpriteRenderer>().sprite = plantData.seedSprite;
+        isAvailable = (plantData.unlockPrice <= 0);
     }
 
     void Update()
@@ -33,7 +31,10 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
-                isGrabbing = true;
+                if (isAvailable)
+                {
+                    isGrabbing = true;
+                }
             }
         }
 
@@ -63,9 +64,8 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
                 if (plantSpot != null && plantSpot.MyPlant == null && _ShopManager.TryBuy(plantData.price))
                 {
-                    Debug.Log(name + " ±¸¸Å!");
                     plantSpot.Plant(plantData);
-                    _ShopManager.RefreshShop();
+                    _ShopManager.RefreshSeed(plantData.seedID);
                 }
                 else
                 {

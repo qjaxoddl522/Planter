@@ -21,3 +21,4 @@ MonoBehaviour:
   abilityPower: 13
   seedSprite: {fileID: 2204643746550681224, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: 9135130128162984572, guid: cd95079427e74ec4db52b9650b95a148, type: 3}
+  plantPrefab: {fileID: 1338233739055652105, guid: fbf73497657e5e840b3551510d71195c, type: 3}

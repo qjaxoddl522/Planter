@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Greenbean
   m_EditorClassIdentifier: 
   seedID: 2
-  unlockPrice: 0
+  unlockPrice: 1
   price: 1
   hp: 10
   growthTime: 5
@@ -21,3 +21,4 @@ MonoBehaviour:
   abilityPower: 13
   seedSprite: {fileID: -1567219613, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: 3391836386302978847, guid: 4f922da55feb8c349ac3c244ceafde24, type: 3}
+  plantPrefab: {fileID: 1338233739055652105, guid: fbf73497657e5e840b3551510d71195c, type: 3}
