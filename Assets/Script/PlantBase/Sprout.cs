@@ -5,6 +5,8 @@ using UnityEngine;
 public interface IPlantable
 {
     PlantData plantData { get; set; }
+    CoinPresenter coinPresenter { get; set; }
+    void DestroyPlant();
 }
 
 public class Sprout : MonoBehaviour, IPlantable
@@ -18,9 +20,13 @@ public class Sprout : MonoBehaviour, IPlantable
     SpriteRenderer plantSpriteRenderer;
     SpriteRenderer sproutSpriteRenderer;
     float plantSpriteHeight;
+
     public PlantData plantData { get; set; }
+    public CoinPresenter coinPresenter { get; set; }
     GrowthController growthController;
+
     bool isDirectionLeft;
+    int depth;
 
     void Awake()
     {
@@ -40,7 +46,7 @@ public class Sprout : MonoBehaviour, IPlantable
                 plantSpriteTransform.position.y - plantSpriteHeight,
                 plantSpriteTransform.position.z);
 
-            int depth = -(int)(transform.parent.position.y + 0.5f);
+            depth = -(int)(transform.parent.position.y + 0.5f);
             plantSpriteRenderer.sortingOrder = depth;
             sproutSpriteRenderer.sortingOrder = depth + 1;
             spriteMask.frontSortingOrder = depth;
@@ -81,8 +87,16 @@ public class Sprout : MonoBehaviour, IPlantable
         var plant = Instantiate(plantData.plantPrefab);
         plant.transform.SetParent(transform.parent);
         plant.transform.position = transform.position;
+        plant.GetComponent<SpriteRenderer>().sortingOrder = depth;
         plant.GetComponent<PlantBase>().isDirectionLeft = isDirectionLeft;
         plant.GetComponent<PlantBase>().plantData = plantData;
+        plant.GetComponent<PlantBase>().coinPresenter = coinPresenter;
+        transform.parent.GetComponent<IPlantSpot>().MyPlant = plant.GetComponent<IPlantable>();
+        Destroy(gameObject);
+    }
+
+    public void DestroyPlant()
+    {
         Destroy(gameObject);
     }
 }

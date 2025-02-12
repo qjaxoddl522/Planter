@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SproutAway : MonoBehaviour
 {
+    [SerializeField] GameObject effectPrefab;
     [SerializeField] float jumpPowerMin;
     [SerializeField] float jumpPowerMax;
     [SerializeField] float gravity;
@@ -38,6 +39,7 @@ public class SproutAway : MonoBehaviour
 
         if (duration <= 0)
         {
+            Instantiate(effectPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

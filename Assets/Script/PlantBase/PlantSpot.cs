@@ -3,13 +3,17 @@ using UnityEngine;
 public interface IPlantSpot
 {
     IPlantable MyPlant { get; set; }
+    CoinPresenter coinPresenter { get; set; }
     void Plant(PlantData plantData);
+    void DigOut();
 }
 
 public class PlantSpot : MonoBehaviour, IPlantSpot
 {
     [SerializeField] GameObject sproutPrefab;
+
     public IPlantable MyPlant { get; set; } = null;
+    public CoinPresenter coinPresenter { get; set; }
 
     public void Plant(PlantData plantData)
     {
@@ -26,6 +30,19 @@ public class PlantSpot : MonoBehaviour, IPlantSpot
         {
             plantMono.transform.localPosition = Vector2.zero;
             MyPlant.plantData = plantData;
+            MyPlant.coinPresenter = coinPresenter;
         }
+    }
+
+    public void DigOut()
+    {
+        if (MyPlant == null)
+        {
+            Debug.LogWarning("식물이 없습니다.");
+            return;
+        }
+        
+        MyPlant.DestroyPlant();
+        MyPlant = null;
     }
 }

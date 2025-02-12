@@ -31,6 +31,11 @@ public class CoinPresenter : MonoBehaviour
         return false;
     }
 
+    public void GetCoin(int amount)
+    {
+        mCoin.Increment(amount);
+    }
+
     public void CoinChanged()
     {
         UpdateView();

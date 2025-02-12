@@ -271,12 +271,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d914fcc14f105ad48a684be4009e4c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPowerMin: 8
-  jumpPowerMax: 12
-  gravity: 0.02
-  hSpeedMin: 2
-  hSpeedMax: 5
-  durationMin: 0.5
+  effectPrefab: {fileID: 6618133785311061286, guid: 3c616267cc23ba24c998ae2ba1a935d4, type: 3}
+  jumpPowerMin: 5
+  jumpPowerMax: 8
+  gravity: 0.2
+  hSpeedMin: 1
+  hSpeedMax: 4
+  durationMin: 0.7
   durationMax: 1.5
   isAway: 0
 --- !u!1 &8618024173204993825

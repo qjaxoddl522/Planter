@@ -7,7 +7,7 @@ public class CoinModel : MonoBehaviour
 
     public event Action CoinChanged;
 
-    private int coin;
+    [SerializeField] private int coin;
     public int Coin
     {
         get { return coin; }

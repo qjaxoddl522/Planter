@@ -9,8 +9,10 @@ public class InitManager : MonoBehaviour
 {
     SystemLoader loader;
 
-    void OnEnable()
+    void Awake()
     {
+        Application.targetFrameRate = 60;
+
         loader = SystemLoader.Instance;
         loader.Register<IShopManager>(GetComponent<ShopManager>());
     }

@@ -1,26 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
 
-public interface IShopSeed
+public class Shovel : MonoBehaviour
 {
-    IShopManager _ShopManager { get; set; }
-    PlantData plantData { get; set; }
-    bool isAvailable { get; set; }
-}
-
-public class ShopSeed : MonoBehaviour, IShopSeed
-{
-    public IShopManager _ShopManager { get; set; }
-    public PlantData plantData { get; set; }
-    public bool isAvailable { get; set; }
     bool isGrabbing = false;
     Vector2 initPos;
 
     void Start()
     {
         initPos = transform.position;
-        GetComponent<SpriteRenderer>().sprite = plantData.seedSprite;
-        isAvailable = (plantData.unlockPrice <= 0);
     }
 
     void Update()
@@ -32,10 +20,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
-                if (isAvailable)
-                {
-                    isGrabbing = true;
-                }
+                isGrabbing = true;
             }
         }
 
@@ -62,15 +47,11 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                     }
                 }
 
-                if (plantSpot != null && plantSpot.MyPlant == null && _ShopManager.TryBuy(plantData.price))
+                if (plantSpot != null && plantSpot.MyPlant != null)
                 {
-                    plantSpot.Plant(plantData);
-                    _ShopManager.RefreshSeed(plantData.seedID);
+                    plantSpot.DigOut();
                 }
-                else
-                {
-                    transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
-                }
+                transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
             }
         }
     }

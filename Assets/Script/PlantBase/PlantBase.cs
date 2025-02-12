@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class PlantBase : MonoBehaviour, IPlantable
 {
     public PlantData plantData { get; set; }
+    public CoinPresenter coinPresenter { get; set; }
 
     public bool isDirectionLeft;
     protected SpriteRenderer spriteRenderer;
@@ -40,7 +41,7 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
     public int Power
     {
         get { return power; }
-        set { power = value; }
+        private set { power = value; }
     }
 
 
@@ -56,6 +57,25 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         Hp = MaxHp;
         MaxCooltime = plantData.abilityPeriod;
         Cooltime = MaxCooltime;
+        power = plantData.abilityPower;
+    }
+
+    void Update()
+    {
+        if (Cooltime > 0)
+        {
+            Cooltime -= Time.deltaTime;
+        }
+        else
+        {
+            Ability();
+            Cooltime = MaxCooltime;
+        }
+    }
+
+    public void DestroyPlant()
+    {
+        Destroy(gameObject);
     }
 
     protected abstract void Ability();

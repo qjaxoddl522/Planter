@@ -11,7 +11,7 @@ public class PlantData : ScriptableObject
     public int hp;
     public float growthTime;
     public float abilityPeriod;
-    public float abilityPower;
+    public int abilityPower;
 
     public Sprite seedSprite;
     public Sprite plantSprite;
