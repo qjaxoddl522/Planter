@@ -1,11 +1,17 @@
 using UnityEngine;
 
-public abstract class PlantBase : MonoBehaviour, IPlantable
+public interface IAttackable
+{
+    void TakeDamage(int damage);
+}
+
+public abstract class PlantBase : MonoBehaviour, IPlantable, IAttackable
 {
     public PlantData plantData { get; set; }
+    public PlantSpot plantSpot { get; set; }
     public CoinPresenter coinPresenter { get; set; }
+    public bool isDirectionLeft { get; set; }
 
-    public bool isDirectionLeft;
     protected SpriteRenderer spriteRenderer;
 
     [Header("Status")]
@@ -76,6 +82,15 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
     public void DestroyPlant()
     {
         Destroy(gameObject);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Hp -= damage;
+        if (Hp <= 0)
+        {
+            DestroyPlant();
+        }
     }
 
     protected abstract void Ability();

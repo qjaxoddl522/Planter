@@ -23,13 +23,15 @@ public class PlantSpot : MonoBehaviour, IPlantSpot
             return;
         }
 
-        MyPlant = Instantiate(sproutPrefab, transform).GetComponent<IPlantable>();
+        var plantInstance = Instantiate(sproutPrefab, transform);
+        MyPlant = plantInstance.GetComponent<IPlantable>();
 
         MonoBehaviour plantMono = MyPlant as MonoBehaviour;
         if (plantMono != null)
         {
             plantMono.transform.localPosition = Vector2.zero;
             MyPlant.plantData = plantData;
+            MyPlant.plantSpot = this;
             MyPlant.coinPresenter = coinPresenter;
         }
     }

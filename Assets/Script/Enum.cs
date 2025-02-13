@@ -21,14 +21,29 @@
 public enum Seed
 {
     // 성장 관련
-    coinInc,
+    CoinInc,
 
     // 방어 관련
-    defMelee,
-    defRanged,
-    defHowitzer,
-    defTank,
+    DefMelee,
+    DefRanged,
+    DefHowitzer,
+    DefTank,
 
     // 버프 관련
-    bufAttack,
+    BufAttack,
+}
+
+public enum Enemy
+{
+    Beetle,
+    DungBeetle,
+    HermitCrab,
+    Earthworm,
+}
+
+public enum EnemyState
+{
+    Idle,
+    Walking,
+    Attacking,
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public interface IPlantable
 {
     PlantData plantData { get; set; }
+    PlantSpot plantSpot { get; set; }
     CoinPresenter coinPresenter { get; set; }
+    bool isDirectionLeft { get; set; }
     void DestroyPlant();
 }
 
@@ -22,10 +24,11 @@ public class Sprout : MonoBehaviour, IPlantable
     float plantSpriteHeight;
 
     public PlantData plantData { get; set; }
+    public PlantSpot plantSpot { get; set; }
     public CoinPresenter coinPresenter { get; set; }
+    public bool isDirectionLeft { get; set; }
     GrowthController growthController;
 
-    bool isDirectionLeft;
     int depth;
 
     void Awake()
@@ -88,9 +91,10 @@ public class Sprout : MonoBehaviour, IPlantable
         plant.transform.SetParent(transform.parent);
         plant.transform.position = transform.position;
         plant.GetComponent<SpriteRenderer>().sortingOrder = depth;
-        plant.GetComponent<PlantBase>().isDirectionLeft = isDirectionLeft;
-        plant.GetComponent<PlantBase>().plantData = plantData;
-        plant.GetComponent<PlantBase>().coinPresenter = coinPresenter;
+        plant.GetComponent<IPlantable>().plantData = plantData;
+        plant.GetComponent<IPlantable>().plantSpot = plantSpot;
+        plant.GetComponent<IPlantable>().coinPresenter = coinPresenter;
+        plant.GetComponent<IPlantable>().isDirectionLeft = isDirectionLeft;
         transform.parent.GetComponent<IPlantSpot>().MyPlant = plant.GetComponent<IPlantable>();
         Destroy(gameObject);
     }
