@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public interface IAttackable
+public interface IPlantable
 {
-    void TakeDamage(int damage);
+    PlantData plantData { get; set; }
+    PlantSpot plantSpot { get; set; }
+    CoinPresenter coinPresenter { get; set; }
+    bool isDirectionLeft { get; set; }
+    void DestroyPlant();
 }
 
-public abstract class PlantBase : MonoBehaviour, IPlantable, IAttackable
+public abstract class PlantBase : MonoBehaviour, IPlantable
 {
     public PlantData plantData { get; set; }
     public PlantSpot plantSpot { get; set; }
@@ -22,7 +26,7 @@ public abstract class PlantBase : MonoBehaviour, IPlantable, IAttackable
         private set { maxHp = value; }
     }
 
-    [SerializeField] private int hp;
+    [SerializeField] int hp;
     public int Hp
     {
         get { return hp; }
@@ -91,6 +95,29 @@ public abstract class PlantBase : MonoBehaviour, IPlantable, IAttackable
         {
             DestroyPlant();
         }
+    }
+
+    public Transform FindClosestEnemy()
+    {
+        EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
+        EnemyBase closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (EnemyBase enemy in enemies)
+        {
+            if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
+            (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
+                continue;
+            
+            float distance = Mathf.Abs(transform.position.x - enemy.transform.position.x);
+            if (distance <= closestDistance && !enemy.transform.GetComponent<IEnemy>().IsHidden)
+            {
+                closestDistance = distance;
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy != null ? closestEnemy.transform : null;
     }
 
     protected abstract void Ability();

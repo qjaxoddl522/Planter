@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Daisy : PlantBase
 {
+    [Header("Daisy")]
     [SerializeField] GameObject coinClicker;
 
     protected override void Ability()

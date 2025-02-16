@@ -44,6 +44,9 @@ TagManager:
   - name: Enemy
     uniqueID: 255024373
     locked: 0
+  - name: Forest
+    uniqueID: 967438215
+    locked: 0
   - name: Plant
     uniqueID: 3860618785
     locked: 0

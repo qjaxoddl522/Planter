@@ -2,15 +2,6 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 
-public interface IPlantable
-{
-    PlantData plantData { get; set; }
-    PlantSpot plantSpot { get; set; }
-    CoinPresenter coinPresenter { get; set; }
-    bool isDirectionLeft { get; set; }
-    void DestroyPlant();
-}
-
 public class Sprout : MonoBehaviour, IPlantable
 {
     [SerializeField] float growAnimationDuration;
@@ -18,11 +9,11 @@ public class Sprout : MonoBehaviour, IPlantable
     [SerializeField] Transform sproutSpriteTransform;
     [SerializeField] Transform plantSpriteTransform;
     [SerializeField] SpriteMask spriteMask;
-    
+
     SpriteRenderer plantSpriteRenderer;
     SpriteRenderer sproutSpriteRenderer;
     float plantSpriteHeight;
-
+    
     public PlantData plantData { get; set; }
     public PlantSpot plantSpot { get; set; }
     public CoinPresenter coinPresenter { get; set; }
@@ -44,9 +35,13 @@ public class Sprout : MonoBehaviour, IPlantable
         {
             plantSpriteRenderer.sprite = plantData.plantSprite;
             plantSpriteHeight = plantSpriteRenderer.bounds.size.y;
+
+            float pivotOffsetY = plantSpriteRenderer.sprite.pivot.y / plantSpriteRenderer.sprite.pixelsPerUnit;
+            float offsetY = plantSpriteHeight - pivotOffsetY;
+
             plantSpriteTransform.position = new Vector3(
                 plantSpriteTransform.position.x,
-                plantSpriteTransform.position.y - plantSpriteHeight,
+                plantSpriteTransform.position.y - offsetY,
                 plantSpriteTransform.position.z);
 
             depth = -(int)(transform.parent.position.y + 0.5f);

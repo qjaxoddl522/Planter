@@ -1,6 +1,12 @@
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+public interface IEnemy
+{
+    void TakeDamage(int damage, Seed attacker);
+    bool IsHidden { get; set; }
+}
+
+public abstract class EnemyBase : MonoBehaviour, IEnemy
 {
     public EnemyData enemyData { get; set; }
 
@@ -12,7 +18,7 @@ public abstract class EnemyBase : MonoBehaviour
         private set { maxHp = value; }
     }
 
-    [SerializeField] private int hp;
+    [SerializeField] int hp;
     public int Hp
     {
         get { return hp; }
@@ -51,24 +57,34 @@ public abstract class EnemyBase : MonoBehaviour
     public float AttackCooltime
     {
         get { return attackCooltime; }
-        private set { attackCooltime = value; }
+        protected set { attackCooltime = value; }
+    }
+
+    [SerializeField] bool isHidden;
+    public bool IsHidden
+    {
+        get { return isHidden; }
+        set { isHidden = value; }
     }
 
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
+    protected bool isDirectionLeft;
 
     [Header("Data")]
     [SerializeField] GameObject effectPrefab;
 
     protected EnemyState currentState;
+    protected FlashEffect flashEffect;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        flashEffect = GetComponent<FlashEffect>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         MaxHp = enemyData.hp;
         Hp = MaxHp;
@@ -77,7 +93,10 @@ public abstract class EnemyBase : MonoBehaviour
         Range = enemyData.range;
         AttackMaxCooltime = enemyData.attackPeriod;
         AttackCooltime = AttackMaxCooltime;
+        isHidden = false;
 
+        isDirectionLeft = transform.position.x > 0;
+        spriteRenderer.flipX = isDirectionLeft;
         ChangeState(EnemyState.Walking);
     }
 
@@ -105,14 +124,14 @@ public abstract class EnemyBase : MonoBehaviour
                 if (CheckForAttack())
                     ChangeState(EnemyState.Idle);
                 else
-                    transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
+                    transform.position += new Vector3(Speed * Time.deltaTime, 0, 0) * (isDirectionLeft ? -1 : 1);
                 break;
             case EnemyState.Attacking:
                 break;
         }
     }
 
-    bool CheckForAttack()
+    protected bool CheckForAttack()
     {
         PlantBase closestPlant = FindClosestPlant();
         if (closestPlant != null)
@@ -123,15 +142,22 @@ public abstract class EnemyBase : MonoBehaviour
         return false;
     }
 
-    PlantBase FindClosestPlant()
+    protected PlantBase FindClosestPlant()
     {
         PlantBase[] targets = FindObjectsByType<PlantBase>(FindObjectsSortMode.None);
         PlantBase closestTarget = null;
         float closestDistance = Mathf.Infinity;
+        float x = transform.position.x;
 
         foreach (PlantBase target in targets)
         {
-            float distance = Mathf.Abs(transform.position.x - target.transform.position.x);
+            float targetX = target.transform.position.x;
+
+            if ((isDirectionLeft && (x < targetX || targetX < 0)) ||
+            (!isDirectionLeft && (x > targetX || targetX > 0)))
+                continue;
+
+            float distance = Mathf.Abs(x - targetX);
             if (distance <= closestDistance)
             {
                 closestDistance = distance;
@@ -142,7 +168,7 @@ public abstract class EnemyBase : MonoBehaviour
         return closestTarget;
     }
 
-    public void ChangeState(EnemyState newState)
+    public virtual void ChangeState(EnemyState newState)
     {
         // 종료 시 1회 실행
         switch (currentState)
@@ -183,7 +209,8 @@ public abstract class EnemyBase : MonoBehaviour
         ChangeState(EnemyState.Idle);
     }
 
-    public void DestroyEnemy()
+    public abstract void TakeDamage(int damage, Seed attacker);
+    protected void DestroyEnemy()
     {
         Instantiate(effectPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Beetle
   m_EditorClassIdentifier: 
   enemyID: 0
-  hp: 5
+  hp: 50
   speed: 0.5
   damage: 3
   range: 2

@@ -46,4 +46,6 @@ public enum EnemyState
     Idle,
     Walking,
     Attacking,
+    HideDown,
+    HideUp,
 }
