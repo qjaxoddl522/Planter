@@ -1,26 +1,53 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public interface IShopSeed
 {
-    IShopManager _ShopManager { get; set; }
+    IShopManager shopManager { get; set; }
+    CoinPresenter coinPresenter { get; set; }
     PlantData plantData { get; set; }
     bool isAvailable { get; set; }
+    event Action<IShopSeed> OnSeedUnlocked;
 }
 
 public class ShopSeed : MonoBehaviour, IShopSeed
 {
-    public IShopManager _ShopManager { get; set; }
+    [SerializeField] GameObject lockPrefab;
+    GameObject lockInstance;
+
+    public IShopManager shopManager { get; set; }
+    public CoinPresenter coinPresenter { get; set; }
     public PlantData plantData { get; set; }
     public bool isAvailable { get; set; }
+    public event Action<IShopSeed> OnSeedUnlocked;
+
+    SpriteRenderer spriteRenderer;
     bool isGrabbing = false;
     Vector2 initPos;
+
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
         initPos = transform.position;
-        GetComponent<SpriteRenderer>().sprite = plantData.seedSprite;
-        isAvailable = (plantData.unlockPrice <= 0);
+        spriteRenderer.sprite = plantData.seedSprite;
+        
+        if (isAvailable)
+        {
+            transform.localScale = Vector2.zero;
+            transform.DOScale(1, 0.8f).SetEase(Ease.OutElastic);
+        }
+        else
+        {
+            lockInstance = Instantiate(lockPrefab, transform);
+            lockInstance.transform.localPosition = Vector2.zero;
+            spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 1);
+        }
+
     }
 
     void Update()
@@ -35,6 +62,10 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                 if (isAvailable)
                 {
                     isGrabbing = true;
+                }
+                else if (coinPresenter.TryBuy(plantData.unlockPrice))
+                {
+                    UnlockSeed();
                 }
             }
         }
@@ -62,10 +93,10 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                     }
                 }
 
-                if (plantSpot != null && plantSpot.MyPlant == null && _ShopManager.TryBuy(plantData.price))
+                if (plantSpot != null && plantSpot.MyPlant == null && shopManager.TryBuy(plantData.price))
                 {
                     plantSpot.Plant(plantData);
-                    _ShopManager.RefreshSeed(plantData.seedID);
+                    shopManager.RefreshSeed(plantData.seedID);
                 }
                 else
                 {
@@ -73,5 +104,13 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                 }
             }
         }
+    }
+
+    public void UnlockSeed()
+    {
+        spriteRenderer.color = Color.white;
+        Destroy(lockInstance);
+        isAvailable = true;
+        OnSeedUnlocked?.Invoke(this);
     }
 }

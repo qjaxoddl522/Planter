@@ -54,6 +54,7 @@ MonoBehaviour:
   range: 0
   attackMaxCooltime: 0
   attackCooltime: 0
+  isHidden: 0
   effectPrefab: {fileID: 6618133785311061286, guid: 3c616267cc23ba24c998ae2ba1a935d4, type: 3}
 --- !u!114 &8274845627367331910
 MonoBehaviour:
@@ -68,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashDuration: 0.3
+  initialOverlayValue: 0.5
   whiteOverlayMaterial: {fileID: 2100000, guid: 6a24cdf3760ab244e96a59a71f33737b, type: 2}
 --- !u!212 &5821031302686671434
 SpriteRenderer:

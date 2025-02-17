@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Earthworm
   m_EditorClassIdentifier: 
   enemyID: 3
-  hp: 10
-  speed: 0.5
+  hp: 20
+  speed: 0.3
   damage: 3
   range: 1
-  attackPeriod: 5
+  attackPeriod: 1
   enemyPrefab: {fileID: 8425425126749407535, guid: ae77ba1d0afa3b943a7b5c5801fdcd51, type: 3}
   IdleSprite: {fileID: -8406518726539485540, guid: bd2aac526ba95a64b83dc47a74d163f2, type: 3}

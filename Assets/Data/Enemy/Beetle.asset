@@ -16,7 +16,7 @@ MonoBehaviour:
   hp: 50
   speed: 0.5
   damage: 3
-  range: 2
+  range: 1
   attackPeriod: 3
   enemyPrefab: {fileID: 3346895005549479815, guid: c52c2ecb7819db24c8950c3ce8227436, type: 3}
   IdleSprite: {fileID: 2631103260818236658, guid: 61269d7e0b6097a4d90aef9c0ecebdf3, type: 3}

@@ -10,11 +10,6 @@ public class Hermitcrab : EnemyBase
         resistanceEffect.SetDirection(!isDirectionLeft);
     }
 
-    protected override void AttackDamage()
-    {
-        Debug.Log("Hermitcrab Attack");
-    }
-
     public override void TakeDamage(int damage, Seed attacker)
     {
         if (attacker == Seed.DefHowitzer)

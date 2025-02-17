@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashDuration: 0.3
+  initialOverlayValue: 0.5
   whiteOverlayMaterial: {fileID: 2100000, guid: 6a24cdf3760ab244e96a59a71f33737b, type: 2}
 --- !u!212 &3143063422712741675
 SpriteRenderer:

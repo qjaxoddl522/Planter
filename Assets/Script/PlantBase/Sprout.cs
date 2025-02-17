@@ -44,7 +44,7 @@ public class Sprout : MonoBehaviour, IPlantable
                 plantSpriteTransform.position.y - offsetY,
                 plantSpriteTransform.position.z);
 
-            depth = -(int)(transform.parent.position.y + 0.5f);
+            depth = -(int)(transform.parent.position.y + 0.5f)*2;
             plantSpriteRenderer.sortingOrder = depth;
             sproutSpriteRenderer.sortingOrder = depth + 1;
             spriteMask.frontSortingOrder = depth;

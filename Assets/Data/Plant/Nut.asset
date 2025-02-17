@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seedID: 4
   unlockPrice: 3
-  price: 1
-  hp: 10
+  price: 2
+  hp: 50
   growthTime: 5
-  abilityPeriod: 12
-  abilityPower: 13
+  abilityPeriod: 999
+  abilityPower: 0
   seedSprite: {fileID: -7866928900747384746, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
-  plantSprite: {fileID: 3600830470828440791, guid: 298ce5c80b037a54c9c27281766c5ba8, type: 3}
-  plantPrefab: {fileID: 1338233739055652105, guid: fbf73497657e5e840b3551510d71195c, type: 3}
+  plantSprite: {fileID: 917045058, guid: 298ce5c80b037a54c9c27281766c5ba8, type: 3}
+  plantPrefab: {fileID: 6968819333634744197, guid: 4624c90f07aad734cbea40cfa33dc31c, type: 3}

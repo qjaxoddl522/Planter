@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3500879570329919880}
-  - component: {fileID: 3507838722793610357}
   - component: {fileID: 4085372451423874057}
+  - component: {fileID: 3507838722793610357}
   - component: {fileID: 997047736054787621}
   m_Layer: 0
   m_Name: Shop Seed
@@ -29,11 +29,24 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -5, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4085372451423874057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018554394247214295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7decfe14be6dde45b8b34b77adb121a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockPrefab: {fileID: 4858631317920871272, guid: 5bbcf47e89b331246b3020428fbc51bf, type: 3}
 --- !u!212 &3507838722793610357
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76,7 +89,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2015769073
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: -7866928900747384746, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -89,18 +102,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4085372451423874057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018554394247214295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7decfe14be6dde45b8b34b77adb121a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &997047736054787621
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -10,11 +10,6 @@ public class Dungbeetle : EnemyBase
         resistanceEffect.SetDirection(isDirectionLeft);
     }
 
-    protected override void AttackDamage()
-    {
-        Debug.Log("Dungbeetle Attack");
-    }
-
     public override void TakeDamage(int damage, Seed attacker)
     {
         if (attacker == Seed.DefRanged)

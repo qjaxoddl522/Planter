@@ -11,12 +11,14 @@ public interface IPlantable
 
 public abstract class PlantBase : MonoBehaviour, IPlantable
 {
+    [Header("Interface")]
     public PlantData plantData { get; set; }
     public PlantSpot plantSpot { get; set; }
     public CoinPresenter coinPresenter { get; set; }
     public bool isDirectionLeft { get; set; }
 
     protected SpriteRenderer spriteRenderer;
+    protected FlashEffect flashEffect;
 
     [Header("Status")]
     [SerializeField] int maxHp;
@@ -54,10 +56,13 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         private set { power = value; }
     }
 
+    [Header("Prefab")]
+    [SerializeField] GameObject effectPrefab;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        flashEffect = GetComponent<FlashEffect>();
     }
 
     void Start()
@@ -93,8 +98,10 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         Hp -= damage;
         if (Hp <= 0)
         {
-            DestroyPlant();
+            Instantiate(effectPrefab, transform.position, Quaternion.identity);
+            plantSpot.DigOut();
         }
+        flashEffect.PlayWhiteFlash();
     }
 
     public Transform FindClosestEnemy()

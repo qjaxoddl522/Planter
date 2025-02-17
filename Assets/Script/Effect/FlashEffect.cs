@@ -3,7 +3,8 @@ using System.Collections;
 
 public class FlashEffect : MonoBehaviour
 {
-    public float flashDuration;
+    [SerializeField] float flashDuration;
+    [SerializeField] float initialOverlayValue;
     [SerializeField] Material whiteOverlayMaterial;
 
     SpriteRenderer spriteRenderer;
@@ -29,7 +30,7 @@ public class FlashEffect : MonoBehaviour
             elapsedTime = 0f;
             if (overlayMaterialInstance != null)
             {
-                overlayMaterialInstance.SetFloat("_Overlay", 1f);
+                overlayMaterialInstance.SetFloat("_Overlay", initialOverlayValue);
             }
             return;
         }
@@ -37,7 +38,7 @@ public class FlashEffect : MonoBehaviour
         // 새로 시작할 경우, 오버레이 머터리얼 생성 및 설정
         overlayMaterialInstance = Instantiate(whiteOverlayMaterial);
         overlayMaterialInstance.SetTexture("_MainTex", originalMaterial.mainTexture);
-        overlayMaterialInstance.SetFloat("_Overlay", 1f);
+        overlayMaterialInstance.SetFloat("_Overlay", initialOverlayValue);
 
         spriteRenderer.material = overlayMaterialInstance;
         flashCoroutine = StartCoroutine(FlashCoroutine());

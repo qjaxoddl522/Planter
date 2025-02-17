@@ -15,7 +15,7 @@ MonoBehaviour:
   seedID: 0
   unlockPrice: 0
   price: 1
-  hp: 10
+  hp: 5
   growthTime: 5
   abilityPeriod: 5
   abilityPower: 13

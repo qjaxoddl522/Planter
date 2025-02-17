@@ -7,11 +7,6 @@ public class Earthworm : EnemyBase
 
     bool isHideUsed = false;
 
-    protected override void AttackDamage()
-    {
-        Debug.Log("Earthworm Attack");
-    }
-
     public override void TakeDamage(int damage, Seed attacker)
     {
         if (!IsHidden)

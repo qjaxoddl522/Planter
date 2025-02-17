@@ -39,8 +39,8 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         private set { damage = value; }
     }
 
-    [SerializeField] int range;
-    public int Range
+    [SerializeField] float range;
+    public float Range
     {
         get { return range; }
         private set { range = value; }
@@ -70,8 +70,9 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
     protected bool isDirectionLeft;
+    protected PlantBase closestPlant;
 
-    [Header("Data")]
+    [Header("Prefab")]
     [SerializeField] GameObject effectPrefab;
 
     protected EnemyState currentState;
@@ -111,13 +112,9 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
                 if (AttackCooltime <= 0)
                 {
                     if (CheckForAttack())
-                    {
                         ChangeState(EnemyState.Attacking);
-                    }
                     else
-                    {
                         ChangeState(EnemyState.Walking);
-                    }
                 }
                 break;
             case EnemyState.Walking:
@@ -133,7 +130,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     protected bool CheckForAttack()
     {
-        PlantBase closestPlant = FindClosestPlant();
+        closestPlant = FindClosestPlant();
         if (closestPlant != null)
         {
             float distanceToPlant = Mathf.Abs(transform.position.x - closestPlant.transform.position.x);
@@ -203,7 +200,11 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         currentState = newState;
     }
 
-    protected abstract void AttackDamage();
+    protected virtual void AttackDamage()
+    {
+        closestPlant?.TakeDamage(Damage);
+    }
+
     public void EndAttack()
     {
         ChangeState(EnemyState.Idle);

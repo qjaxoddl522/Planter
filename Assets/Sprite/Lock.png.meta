@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 298ce5c80b037a54c9c27281766c5ba8
+guid: 897e565bea677a542bb04a719cceb4ae
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3600830470828440791
-    second: nut_0
+      213: -5620155193319629329
+    second: Lock_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -126,89 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Nut_0
+      name: Lock_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 2
         y: 1
-        width: 10
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 24d5b483dd94fc74284969c17c036f13
-      internalID: 917045058
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Nut_1
-      rect:
-        serializedVersion: 2
-        x: 19
-        y: 1
-        width: 10
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f1a32808085fa1841b026e31ef26a283
-      internalID: -26255248
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Nut_2
-      rect:
-        serializedVersion: 2
-        x: 35
-        y: 1
-        width: 11
-        height: 13
-      alignment: 9
-      pivot: {x: 0.45454547, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6633c79eb6c710749a210c7b1e5a610e
-      internalID: 1652960105
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Nut_3
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 1
-        width: 10
-        height: 13
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c9756a5602a9dd478574e4a1b1bb021
-      internalID: 1617597783
+      spriteID: feddd97e0a23102b0800000000000000
+      internalID: -5620155193319629329
       vertices: []
       indices: 
       edges: []
@@ -217,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1226245d4b6526a4cb08c48bd5a82d3c
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -227,10 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Nut_0: 917045058
-      Nut_1: -26255248
-      Nut_2: 1652960105
-      Nut_3: 1617597783
+      Lock_0: -5620155193319629329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

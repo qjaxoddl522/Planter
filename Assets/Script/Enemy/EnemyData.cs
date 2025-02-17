@@ -8,7 +8,7 @@ public class EnemyData : ScriptableObject
     public int hp;
     public float speed;
     public int damage;
-    public int range;
+    public float range;
     public float attackPeriod;
 
     public GameObject enemyPrefab;
