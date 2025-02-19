@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Dungbeetle
   m_EditorClassIdentifier: 
   enemyID: 1
-  hp: 20
-  speed: 0.4
-  damage: 3
+  hp: 30
+  speed: 0.3
+  damage: 1
   range: 1
-  attackPeriod: 4
+  attackPeriod: 1.5
   enemyPrefab: {fileID: 3346895005549479815, guid: c5f5d4ee20a8b1b4d8a83abfad9e5f60, type: 3}
   IdleSprite: {fileID: -1072456773, guid: 3b6c2cbd115f6bc4db799fe8f3bc58e5, type: 3}

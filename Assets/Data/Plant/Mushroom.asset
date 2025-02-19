@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7562dd0c6ceb514d8ff1823a5b962e6, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  seedID: 1
-  unlockPrice: 0
+  seedID: 3
+  unlockPrice: 1
   price: 3
-  hp: 10
+  hp: 100
   growthTime: 5
-  abilityPeriod: 12
-  abilityPower: 13
+  abilityPeriod: 3
+  abilityRange: 3
+  abilityPower: 2
   seedSprite: {fileID: 161624645, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
-  plantSprite: {fileID: 357749872346554099, guid: 743e5a4d4e1dc934eb68d56f28da2900, type: 3}
-  plantPrefab: {fileID: 1338233739055652105, guid: fbf73497657e5e840b3551510d71195c, type: 3}
+  plantSprite: {fileID: 621521822, guid: 743e5a4d4e1dc934eb68d56f28da2900, type: 3}
+  plantPrefab: {fileID: 7689923538928827762, guid: aced3f2abec460544adf2dc6e47002db, type: 3}
+  description: {fileID: 11400000, guid: eb0f038d4da293941a560fd548533c6f, type: 2}

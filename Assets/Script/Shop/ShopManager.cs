@@ -13,16 +13,17 @@ public class ShopManager : MonoBehaviour, IShopManager
 {
     [SerializeField] CoinPresenter coinPresenter;
     [SerializeField] Transform shopTransform;
+    [SerializeField] Transform shopPanelTransform;
     [SerializeField] GameObject buySeedPrefab;
     [SerializeField] PlantData[] plantData;
-    
-    GameObject[] shopSeedObj;
-    bool[] isSeedAvailable;
+
+    Dictionary<Seed, GameObject> shopSeedObj;
+    Dictionary<Seed, bool> isSeedAvailable;
 
     public void Init()
     {
-        shopSeedObj = new GameObject[plantData.Length];
-        isSeedAvailable = new bool[plantData.Length];
+        shopSeedObj = new Dictionary<Seed, GameObject>();
+        isSeedAvailable = new Dictionary<Seed, bool>();
         CreateShop();
     }
 
@@ -30,7 +31,7 @@ public class ShopManager : MonoBehaviour, IShopManager
     {
         foreach (var data in plantData)
         {
-            isSeedAvailable[(int)data.seedID] = data.unlockPrice <= 0;
+            isSeedAvailable[data.seedID] = data.unlockPrice <= 0;
             CreateSeed(data.seedID);
         }
     }
@@ -39,29 +40,29 @@ public class ShopManager : MonoBehaviour, IShopManager
     {
         int i = (int)seed;
         var seedInstance = Instantiate(buySeedPrefab, shopTransform);
-        shopSeedObj[i] = seedInstance;
+        shopSeedObj[seed] = seedInstance;
         seedInstance.name = plantData[i].ToString();
         seedInstance.transform.position = new Vector3(
-            -plantData.Length / 2 + i + (plantData.Length % 2 == 0 ? 0.5f : 0),
-            seedInstance.transform.position.y);
+            (-plantData.Length / 2 + i) * 1f + (plantData.Length % 2 == 0 ? 0.5f : 0),
+            shopPanelTransform.position.y);
 
         var shopSeed = seedInstance.GetComponent<IShopSeed>();
         shopSeed.shopManager = this;
         shopSeed.coinPresenter = coinPresenter;
         shopSeed.plantData = plantData[i];
-        shopSeed.isAvailable = isSeedAvailable[i];
+        shopSeed.isAvailable = isSeedAvailable[seed];
         shopSeed.OnSeedUnlocked += HandleSeedUnlocked;
     }
 
     public void RefreshSeed(Seed seed)
     {
-        Destroy(shopSeedObj[(int)seed]);
+        Destroy(shopSeedObj[seed]);
         CreateSeed(seed);
     }
 
     void HandleSeedUnlocked(IShopSeed shopSeed)
     {
-        isSeedAvailable[(int)shopSeed.plantData.seedID] = true;
+        isSeedAvailable[shopSeed.plantData.seedID] = true;
     }
     
     // 프리팹을 위한 메서드 옮기기

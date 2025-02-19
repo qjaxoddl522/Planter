@@ -8,7 +8,10 @@ public interface IShopSeed
     CoinPresenter coinPresenter { get; set; }
     PlantData plantData { get; set; }
     bool isAvailable { get; set; }
+
+    bool isGrabbing { get; set; }
     event Action<IShopSeed> OnSeedUnlocked;
+    event Action OnSeedDropped;
 }
 
 public class ShopSeed : MonoBehaviour, IShopSeed
@@ -20,15 +23,17 @@ public class ShopSeed : MonoBehaviour, IShopSeed
     public CoinPresenter coinPresenter { get; set; }
     public PlantData plantData { get; set; }
     public bool isAvailable { get; set; }
+    public bool isGrabbing { get; set; }
     public event Action<IShopSeed> OnSeedUnlocked;
+    public event Action OnSeedDropped;
 
     SpriteRenderer spriteRenderer;
-    bool isGrabbing = false;
     Vector2 initPos;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        isGrabbing = false;
     }
 
     void Start()
@@ -47,7 +52,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
             lockInstance.transform.localPosition = Vector2.zero;
             spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 1);
         }
-
+        GetComponent<Description>().data = plantData.description;
     }
 
     void Update()
@@ -77,9 +82,10 @@ public class ShopSeed : MonoBehaviour, IShopSeed
             if (Input.GetMouseButtonUp(0))
             {
                 isGrabbing = false;
+                OnSeedDropped?.Invoke();
 
-                RaycastHit2D[] hitAll = Physics2D.RaycastAll(mousePos, Vector2.zero);
                 IPlantSpot plantSpot = null;
+                RaycastHit2D[] hitAll = Physics2D.RaycastAll(mousePos, Vector2.zero);
                 foreach (RaycastHit2D hit in hitAll)
                 {
                     if (hit.collider != null)

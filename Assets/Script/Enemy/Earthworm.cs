@@ -12,11 +12,7 @@ public class Earthworm : EnemyBase
         if (!IsHidden)
         {
             Hp -= damage;
-            if (Hp <= 0)
-            {
-                DestroyEnemy();
-            }
-            flashEffect.PlayWhiteFlash();
+            TakeDamagePostProcessing(attacker);
         }
     }
 

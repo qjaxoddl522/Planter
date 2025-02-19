@@ -7,11 +7,12 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         CreateEnemy(Enemy.DungBeetle);
+        CreateEnemy(Enemy.Earthworm);
     }
 
     void CreateEnemy(Enemy enemy)
     {
-        var inst = Instantiate(enemyData[(int)enemy].enemyPrefab, new Vector3(10, 0), Quaternion.identity);
+        var inst = Instantiate(enemyData[(int)enemy].enemyPrefab, new Vector3(10, Random.Range(-2f, 2f)), Quaternion.identity);
         inst.GetComponent<EnemyBase>().enemyData = enemyData[(int)enemy];
     }
 }

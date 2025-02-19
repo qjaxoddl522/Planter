@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public interface IEnemy
 {
     void TakeDamage(int damage, Seed attacker);
+    void SpeedAffect(float value, StatModifierType type, float duration);
     bool IsHidden { get; set; }
 }
 
@@ -11,12 +13,8 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     public EnemyData enemyData { get; set; }
 
     [Header("Status")]
-    [SerializeField] int maxHp;
-    protected int MaxHp
-    {
-        get { return maxHp; }
-        private set { maxHp = value; }
-    }
+    [SerializeField] Stat maxHp;
+    protected int MaxHp { get { return maxHp.FinalValueInt; } }
 
     [SerializeField] int hp;
     public int Hp
@@ -25,33 +23,17 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         set { hp = value; }
     }
 
-    [SerializeField] float speed;
-    public float Speed
-    {
-        get { return speed; }
-        private set { speed = value; }
-    }
+    [SerializeField] Stat speed;
+    public float Speed { get { return speed.FinalValue; } }
 
-    [SerializeField] int damage;
-    public int Damage
-    {
-        get { return damage; }
-        private set { damage = value; }
-    }
+    [SerializeField] Stat damage;
+    public int Damage { get { return damage.FinalValueInt; } }
 
-    [SerializeField] float range;
-    public float Range
-    {
-        get { return range; }
-        private set { range = value; }
-    }
+    [SerializeField] Stat range;
+    public float Range { get { return range.FinalValue; } }
 
-    [SerializeField] float attackMaxCooltime;
-    public float AttackMaxCooltime
-    {
-        get { return attackMaxCooltime; }
-        private set { attackMaxCooltime = value; }
-    }
+    [SerializeField] Stat attackMaxCooltime;
+    public float AttackMaxCooltime { get { return attackMaxCooltime.FinalValue; } }
 
     [SerializeField] float attackCooltime;
     public float AttackCooltime
@@ -87,12 +69,12 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     protected virtual void Start()
     {
-        MaxHp = enemyData.hp;
+        maxHp = new Stat(enemyData.hp);
         Hp = MaxHp;
-        Speed = enemyData.speed;
-        Damage = enemyData.damage;
-        Range = enemyData.range;
-        AttackMaxCooltime = enemyData.attackPeriod;
+        speed = new Stat(enemyData.speed);
+        damage = new Stat(enemyData.damage);
+        range = new Stat(enemyData.range);
+        attackMaxCooltime = new Stat(enemyData.attackPeriod);
         AttackCooltime = AttackMaxCooltime;
         isHidden = false;
 
@@ -211,6 +193,28 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     }
 
     public abstract void TakeDamage(int damage, Seed attacker);
+    public virtual void TakeDamagePostProcessing(Seed attacker)
+    {
+        if (Hp <= 0)
+        {
+            DestroyEnemy();
+        }
+        flashEffect.PlayWhiteFlash();
+    }
+
+    public void SpeedAffect(float value, StatModifierType type, float duration)
+    {
+        StatModifier speedDebuff = new StatModifier(value, type, duration);
+        speed.AddModifier(speedDebuff);
+        StartCoroutine(RemoveModifierAfterDuration(speed, speedDebuff, duration));
+    }
+
+    IEnumerator RemoveModifierAfterDuration(Stat stat, StatModifier modifier, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        stat.RemoveModifier(modifier);
+    }
+
     protected void DestroyEnemy()
     {
         Instantiate(effectPrefab, transform.position, Quaternion.identity);

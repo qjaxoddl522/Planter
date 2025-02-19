@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyID: 3
   hp: 20
-  speed: 0.3
-  damage: 3
+  speed: 0.4
+  damage: 2
   range: 1
   attackPeriod: 1
   enemyPrefab: {fileID: 8425425126749407535, guid: ae77ba1d0afa3b943a7b5c5801fdcd51, type: 3}

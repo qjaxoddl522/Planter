@@ -11,9 +11,12 @@ public class PlantData : ScriptableObject
     public int hp;
     public float growthTime;
     public float abilityPeriod;
+    public float abilityRange;
     public int abilityPower;
 
     public Sprite seedSprite;
     public Sprite plantSprite;
     public GameObject plantPrefab;
+
+    public DescriptionData description;
 }

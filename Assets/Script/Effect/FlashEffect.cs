@@ -50,7 +50,7 @@ public class FlashEffect : MonoBehaviour
         while (elapsedTime < flashDuration)
         {
             elapsedTime += Time.deltaTime;
-            float overlayValue = Mathf.Lerp(1f, 0f, elapsedTime / flashDuration);
+            float overlayValue = Mathf.Lerp(initialOverlayValue, 0f, elapsedTime / flashDuration);
             overlayMaterialInstance.SetFloat("_Overlay", overlayValue);
             yield return null;
         }

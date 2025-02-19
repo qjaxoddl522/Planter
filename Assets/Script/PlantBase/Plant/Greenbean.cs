@@ -8,7 +8,7 @@ public class Greenbean : PlantBase
     protected override void Ability()
     {
         Transform target = FindClosestEnemy();
-        if (target != null)
+        if (target != null && Mathf.Abs(target.position.x - transform.position.x) <= AttackRange)
         {
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<GreenbeanBullet>().Initialize(Power, target);

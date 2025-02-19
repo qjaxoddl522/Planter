@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7562dd0c6ceb514d8ff1823a5b962e6, type: 3}
   m_Name: Corn
   m_EditorClassIdentifier: 
-  seedID: 3
+  seedID: 2
   unlockPrice: 0
   price: 3
   hp: 10
   growthTime: 5
   abilityPeriod: 3
+  abilityRange: 5
   abilityPower: 9
   seedSprite: {fileID: 1165664582444472386, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: -379371869, guid: b0eb363444c601e4ca9ad3386e551077, type: 3}
   plantPrefab: {fileID: 1338233739055652105, guid: 709d70178e1a32b4b81330b98ac3304d, type: 3}
+  description: {fileID: 11400000, guid: 47daa0d4aace835439cb625509830291, type: 2}

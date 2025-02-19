@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IPlantable
@@ -21,12 +23,8 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
     protected FlashEffect flashEffect;
 
     [Header("Status")]
-    [SerializeField] int maxHp;
-    protected int MaxHp
-    {
-        get { return maxHp; }
-        private set { maxHp = value; }
-    }
+    [SerializeField] Stat maxHp;
+    protected int MaxHp { get { return maxHp.FinalValueInt; } }
 
     [SerializeField] int hp;
     public int Hp
@@ -35,12 +33,8 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         set { hp = value; }
     }
 
-    [SerializeField] float maxCooltime;
-    protected float MaxCooltime
-    {
-        get { return maxCooltime; }
-        private set { maxCooltime = value; }
-    }
+    [SerializeField] Stat maxCooltime;
+    protected float MaxCooltime { get { return maxCooltime.FinalValue; } }
 
     [SerializeField] float cooltime;
     public float Cooltime
@@ -49,12 +43,11 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         set { cooltime = value; }
     }
 
-    [SerializeField] int power;
-    public int Power
-    {
-        get { return power; }
-        private set { power = value; }
-    }
+    [SerializeField] Stat attackRange;
+    public float AttackRange { get { return attackRange.FinalValue; } }
+
+    [SerializeField] Stat power;
+    public int Power{ get { return power.FinalValueInt; } }
 
     [Header("Prefab")]
     [SerializeField] GameObject effectPrefab;
@@ -67,12 +60,16 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
 
     void Start()
     {
-        spriteRenderer.flipX = isDirectionLeft;
-        MaxHp = plantData.hp;
+        maxHp = new Stat(plantData.hp);
         Hp = MaxHp;
-        MaxCooltime = plantData.abilityPeriod;
+        maxCooltime = new Stat(plantData.abilityPeriod);
         Cooltime = MaxCooltime;
-        power = plantData.abilityPower;
+        attackRange = new Stat(plantData.abilityRange);
+        power = new Stat(plantData.abilityPower);
+
+        spriteRenderer.flipX = isDirectionLeft;
+        if (GetComponent<Description>() is Description d)
+            d.data = plantData.description;
     }
 
     void Update()
@@ -104,10 +101,10 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         flashEffect.PlayWhiteFlash();
     }
 
-    public Transform FindClosestEnemy()
+    protected Transform FindClosestEnemy()
     {
         EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
-        EnemyBase closestEnemy = null;
+        Transform closestEnemy = null;
         float closestDistance = Mathf.Infinity;
 
         foreach (EnemyBase enemy in enemies)
@@ -120,11 +117,31 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
             if (distance <= closestDistance && !enemy.transform.GetComponent<IEnemy>().IsHidden)
             {
                 closestDistance = distance;
-                closestEnemy = enemy;
+                closestEnemy = enemy.transform;
             }
         }
 
-        return closestEnemy != null ? closestEnemy.transform : null;
+        return closestEnemy;
+    }
+
+    protected List<Transform> FindAllEnemies()
+    {
+        EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
+        List<Transform> resultEnemies = new List<Transform>();
+
+        foreach (EnemyBase enemy in enemies)
+        {
+            if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
+            (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
+                continue;
+
+            if (!enemy.transform.GetComponent<IEnemy>().IsHidden)
+            {
+                resultEnemies.Add(enemy.transform);
+            }
+        }
+
+        return resultEnemies;
     }
 
     protected abstract void Ability();

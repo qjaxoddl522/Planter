@@ -24,9 +24,9 @@ public enum Seed
     CoinInc,
 
     // 방어 관련
-    DefMelee,
     DefRanged,
     DefHowitzer,
+    DefMelee,
     DefTank,
 
     // 버프 관련

@@ -22,10 +22,6 @@ public class Dungbeetle : EnemyBase
             Hp -= damage;
         }
 
-        if (Hp <= 0)
-        {
-            DestroyEnemy();
-        }
-        flashEffect.PlayWhiteFlash();
+        TakeDamagePostProcessing(attacker);
     }
 }
