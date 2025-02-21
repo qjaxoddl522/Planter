@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IPlantable
 {
+    Vector2 centerPos { get; set; }
     PlantData plantData { get; set; }
     PlantSpot plantSpot { get; set; }
     CoinPresenter coinPresenter { get; set; }
@@ -14,6 +15,7 @@ public interface IPlantable
 public abstract class PlantBase : MonoBehaviour, IPlantable
 {
     [Header("Interface")]
+    public Vector2 centerPos { get; set; }
     public PlantData plantData { get; set; }
     public PlantSpot plantSpot { get; set; }
     public CoinPresenter coinPresenter { get; set; }
@@ -24,13 +26,13 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
 
     [Header("Status")]
     [SerializeField] Stat maxHp;
-    protected int MaxHp { get { return maxHp.FinalValueInt; } }
+    public int MaxHp { get { return maxHp.FinalValueInt; } }
 
     [SerializeField] int hp;
     public int Hp
     {
         get { return hp; }
-        set { hp = value; }
+        set { hp = Mathf.Min(MaxHp, value); }
     }
 
     [SerializeField] Stat maxCooltime;
@@ -51,6 +53,7 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
 
     [Header("Prefab")]
     [SerializeField] GameObject effectPrefab;
+    [SerializeField] GameObject healParticlePrefab;
 
     void Awake()
     {
@@ -95,10 +98,16 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         Hp -= damage;
         if (Hp <= 0)
         {
-            Instantiate(effectPrefab, transform.position, Quaternion.identity);
+            Instantiate(effectPrefab, centerPos, Quaternion.identity);
             plantSpot.DigOut();
         }
         flashEffect.PlayWhiteFlash();
+    }
+
+    public void Heal(int damage)
+    {
+        Hp += damage;
+        Instantiate(healParticlePrefab, centerPos, Quaternion.identity);
     }
 
     protected Transform FindClosestEnemy()

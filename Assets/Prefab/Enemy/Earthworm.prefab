@@ -47,16 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f759bcf3e009d42a9d0e964718a37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 0
   hp: 0
-  speed: 0
-  damage: 0
-  range: 0
-  attackMaxCooltime: 0
   attackCooltime: 0
   isHidden: 0
   effectPrefab: {fileID: 6618133785311061286, guid: 3c616267cc23ba24c998ae2ba1a935d4, type: 3}
-  hideMoveDist: 2
+  hideMoveDist: 3
 --- !u!114 &6866987825866337567
 MonoBehaviour:
   m_ObjectHideFlags: 0

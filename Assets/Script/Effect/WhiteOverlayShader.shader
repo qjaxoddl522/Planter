@@ -38,10 +38,13 @@ Shader "Custom/WhiteOverlayShader" {
 
             fixed4 frag (v2f i) : SV_Target {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                // _Overlay가 1이면 완전 흰색, 0이면 원래 색상
+                // 알파 값이 일정 임계값(예: 0.1) 미만이면 픽셀을 버림
+                clip(col.a - 0.1);
+                // _Overlay가 1이면 완전 흰색, 0이면 원래 색상 (어둡게 하려면 lerp 대상색을 0으로 변경)
                 col.rgb = lerp(col.rgb, 1.0, _Overlay);
                 return col;
             }
+
             ENDCG
         }
     }

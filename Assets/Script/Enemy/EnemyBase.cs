@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public interface IEnemy
 public abstract class EnemyBase : MonoBehaviour, IEnemy
 {
     public EnemyData enemyData { get; set; }
+    public event Action OnDeath;
 
     [Header("Status")]
     [SerializeField] Stat maxHp;
@@ -86,6 +88,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     void Update()
     {
         AttackCooltime -= Time.deltaTime;
+        spriteRenderer.sortingOrder = Modify.GetDepth(transform.position.y);
 
         // 현재 상태에서 계속 실행
         switch (currentState)
@@ -217,6 +220,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     protected void DestroyEnemy()
     {
+        OnDeath?.Invoke();
         Instantiate(effectPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

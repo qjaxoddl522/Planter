@@ -10,19 +10,17 @@ public class PlantSpotGenerator : MonoBehaviour
     {
         for (int i = 1; i <= spotWidth; i++)
         {
-            var 
-            inst = Instantiate(plantSpotPrefab, transform);
-            inst.transform.position = new Vector2((0.5f + i * 1.2f), 0.5f);
-            inst.GetComponent<IPlantSpot>().coinPresenter = coinPresenter;
-            inst = Instantiate(plantSpotPrefab, transform);
-            inst.transform.position = new Vector2(-(0.5f + i * 1.2f), 0.5f);
-            inst.GetComponent<IPlantSpot>().coinPresenter = coinPresenter;
-            inst = Instantiate(plantSpotPrefab, transform);
-            inst.transform.position = new Vector2((0.5f + i * 1.2f), -0.5f);
-            inst.GetComponent<IPlantSpot>().coinPresenter = coinPresenter;
-            inst = Instantiate(plantSpotPrefab, transform);
-            inst.transform.position = new Vector2(-(0.5f + i * 1.2f), -0.5f);
-            inst.GetComponent<IPlantSpot>().coinPresenter = coinPresenter;
+            CreatePlantSpot(new Vector2((0.5f + i * 1.2f), 0.5f));
+            CreatePlantSpot(new Vector2(-(0.5f + i * 1.2f), 0.5f));
+            CreatePlantSpot(new Vector2((0.5f + i * 1.2f), -0.5f));
+            CreatePlantSpot(new Vector2(-(0.5f + i * 1.2f), -0.5f));
         }
+    }
+
+    void CreatePlantSpot(Vector2 pos)
+    {
+        var inst = Instantiate(plantSpotPrefab, transform);
+        inst.transform.position = pos;
+        inst.GetComponent<IPlantSpot>().coinPresenter = coinPresenter;
     }
 }

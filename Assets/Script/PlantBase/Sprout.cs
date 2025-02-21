@@ -13,14 +13,16 @@ public class Sprout : MonoBehaviour, IPlantable
     SpriteRenderer plantSpriteRenderer;
     SpriteRenderer sproutSpriteRenderer;
     float plantSpriteHeight;
-    
+
+    GrowthController growthController;
+    int depth;
+
+    [Header("Interface")]
+    public Vector2 centerPos { get; set; }
     public PlantData plantData { get; set; }
     public PlantSpot plantSpot { get; set; }
     public CoinPresenter coinPresenter { get; set; }
     public bool isDirectionLeft { get; set; }
-    GrowthController growthController;
-
-    int depth;
 
     void Awake()
     {
@@ -33,6 +35,14 @@ public class Sprout : MonoBehaviour, IPlantable
     {
         if (plantSpriteRenderer != null)
         {
+            // 중심위치 구하기
+            Sprite sprite = plantData.plantSprite;
+            Vector2 centerPixel = sprite.rect.size * 0.5f;
+            Vector2 offsetPixel = centerPixel - sprite.pivot;
+            Vector2 offset = offsetPixel / sprite.pixelsPerUnit;
+            centerPos = (Vector2)plantSpriteRenderer.transform.position + offset;
+
+            // 식물 스프라이트 땅속에 넣기
             plantSpriteRenderer.sprite = plantData.plantSprite;
             plantSpriteHeight = plantSpriteRenderer.bounds.size.y;
 
@@ -44,12 +54,14 @@ public class Sprout : MonoBehaviour, IPlantable
                 plantSpriteTransform.position.y - offsetY,
                 plantSpriteTransform.position.z);
 
-            depth = -(int)(transform.parent.position.y + 0.5f)*2;
+            // 정렬 순서 설정
+            depth = Modify.GetDepth(transform.position.y);
             plantSpriteRenderer.sortingOrder = depth;
             sproutSpriteRenderer.sortingOrder = depth + 1;
             spriteMask.frontSortingOrder = depth;
             spriteMask.backSortingOrder = depth - 1;
 
+            // 방향 설정
             isDirectionLeft = transform.parent.position.x < 0;
             plantSpriteRenderer.flipX = isDirectionLeft;
         }
@@ -82,16 +94,19 @@ public class Sprout : MonoBehaviour, IPlantable
 
     void Plant()
     {
-        var plant = Instantiate(plantData.plantPrefab);
-        plant.transform.SetParent(transform.parent);
-        plant.transform.position = transform.position;
-        plant.GetComponent<SpriteRenderer>().sortingOrder = depth;
-        plant.GetComponent<IPlantable>().plantData = plantData;
-        plant.GetComponent<IPlantable>().plantSpot = plantSpot;
-        plant.GetComponent<IPlantable>().coinPresenter = coinPresenter;
-        plant.GetComponent<IPlantable>().isDirectionLeft = isDirectionLeft;
-        transform.parent.GetComponent<IPlantSpot>().MyPlant = plant.GetComponent<IPlantable>();
-        Destroy(gameObject);
+        var instance = Instantiate(plantData.plantPrefab);
+        instance.transform.SetParent(transform.parent);
+        instance.transform.position = transform.position;
+        instance.GetComponent<SpriteRenderer>().sortingOrder = depth;
+
+        var plantable = instance.GetComponent<IPlantable>();
+        plantable.centerPos = centerPos;
+        plantable.plantData = plantData;
+        plantable.plantSpot = plantSpot;
+        plantable.coinPresenter = coinPresenter;
+        plantable.isDirectionLeft = isDirectionLeft;
+        transform.parent.GetComponent<IPlantSpot>().MyPlant = instance.GetComponent<IPlantable>();
+        DestroyPlant();
     }
 
     public void DestroyPlant()
@@ -110,7 +125,8 @@ public class GrowthController : MonoBehaviour
 
     private void Update()
     {
-        elapsedTime += Time.deltaTime;
+        if (TimePresenter.isDaytime)
+            elapsedTime += Time.deltaTime;
 
         if (!isGrowHalf && elapsedTime >= growthDuration / 2)
         {

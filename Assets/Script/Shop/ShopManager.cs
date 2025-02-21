@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public interface IShopManager : IManager
+public interface IShopManager
 {
     void CreateShop();
     void RefreshSeed(Seed seed);
@@ -15,12 +15,13 @@ public class ShopManager : MonoBehaviour, IShopManager
     [SerializeField] Transform shopTransform;
     [SerializeField] Transform shopPanelTransform;
     [SerializeField] GameObject buySeedPrefab;
+    [SerializeField] TimeModel timeModel;
     [SerializeField] PlantData[] plantData;
 
     Dictionary<Seed, GameObject> shopSeedObj;
     Dictionary<Seed, bool> isSeedAvailable;
 
-    public void Init()
+    void Start()
     {
         shopSeedObj = new Dictionary<Seed, GameObject>();
         isSeedAvailable = new Dictionary<Seed, bool>();

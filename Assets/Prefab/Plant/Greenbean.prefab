@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -7576766136515980459}
   - component: {fileID: 634738622594657775}
   - component: {fileID: 157066585535652027}
+  - component: {fileID: 467419130922776403}
   m_Layer: 0
   m_Name: Greenbean
   m_TagString: Untagged
@@ -47,12 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d800519d357507b42bca183bd9e58203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 0
   hp: 0
-  maxCooltime: 0
   cooltime: 0
-  power: 0
   effectPrefab: {fileID: 6618133785311061286, guid: 3c616267cc23ba24c998ae2ba1a935d4, type: 3}
+  healParticlePrefab: {fileID: 5508157766434350156, guid: d99150420d6441b428769237f042ddbb, type: 3}
   bulletPrefab: {fileID: 5169487765962651448, guid: 1b2be2b4e91501d42ac60ea8302d3878, type: 3}
 --- !u!114 &-7576766136515980459
 MonoBehaviour:
@@ -146,3 +145,49 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &467419130922776403
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338233739055652105}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.40625}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.5, y: 0.8125}
+    newSize: {x: 0.75, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.5, y: 0.8125}
+  m_EdgeRadius: 0

@@ -9,11 +9,12 @@ public class Shovel : MonoBehaviour
     void Start()
     {
         initPos = transform.position;
+        TimePresenter.OnNightChanged += NightChanged;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (TimePresenter.isDaytime && Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -51,8 +52,16 @@ public class Shovel : MonoBehaviour
                 {
                     plantSpot.DigOut();
                 }
-                transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+                ReturnInitPos();
             }
         }
+    }
+
+    void ReturnInitPos() => transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+
+    void NightChanged()
+    {
+        isGrabbing = false;
+        ReturnInitPos();
     }
 }

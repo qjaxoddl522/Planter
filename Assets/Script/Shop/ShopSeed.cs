@@ -12,10 +12,13 @@ public interface IShopSeed
     bool isGrabbing { get; set; }
     event Action<IShopSeed> OnSeedUnlocked;
     event Action OnSeedDropped;
+
+    void NightChanged();
 }
 
 public class ShopSeed : MonoBehaviour, IShopSeed
 {
+    [SerializeField] GameObject effectPrefab;
     [SerializeField] GameObject lockPrefab;
     GameObject lockInstance;
 
@@ -34,6 +37,8 @@ public class ShopSeed : MonoBehaviour, IShopSeed
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         isGrabbing = false;
+
+        TimePresenter.OnNightChanged += NightChanged;
     }
 
     void Start()
@@ -57,7 +62,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && TimePresenter.isDaytime)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -106,17 +111,35 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                 }
                 else
                 {
-                    transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+                    ReturnInitPos();
                 }
             }
         }
     }
 
+    void ReturnInitPos() => transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+
     public void UnlockSeed()
     {
+        var effect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
         spriteRenderer.color = Color.white;
+
         Destroy(lockInstance);
         isAvailable = true;
         OnSeedUnlocked?.Invoke(this);
+    }
+
+    public void NightChanged()
+    {
+        if (isGrabbing)
+        {
+            ReturnInitPos();
+            isGrabbing = false;
+        }
+    }
+
+    void OnDestroy()
+    {
+        TimePresenter.OnNightChanged -= NightChanged;
     }
 }

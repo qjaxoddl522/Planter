@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class CoinModel : MonoBehaviour
 {
-    const int initCoin = 10;
+    [SerializeField] OtherSystemData sysData;
 
     public event Action CoinChanged;
-
+    
     [SerializeField] private int coin;
     public int Coin
     {
@@ -20,7 +20,7 @@ public class CoinModel : MonoBehaviour
 
     public void Init()
     {
-        Coin = initCoin;
+        Coin = sysData.initCoin;
     }
 
     public void Set(int amount)

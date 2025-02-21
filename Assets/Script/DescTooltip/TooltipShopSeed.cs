@@ -13,6 +13,7 @@ public class TooltipShopSeed : MonoBehaviour
     {
         shopSeed.OnSeedUnlocked += SeedUnlock;
         shopSeed.OnSeedDropped += SeedDrop;
+        TimePresenter.OnNightChanged += NightChanged;
     }
 
     void Update()
@@ -37,7 +38,7 @@ public class TooltipShopSeed : MonoBehaviour
                 }
             }
 
-            if (plantSpot != null)
+            if (plantSpot != null && plantSpot.MyPlant == null)
             {
                 TooltipManager.Instance.ShowTooltip(TooltipIconType.Coin, shopSeed.plantData.price.ToString());
             }
@@ -62,4 +63,15 @@ public class TooltipShopSeed : MonoBehaviour
 
     void SeedUnlock(IShopSeed seed) => TooltipManager.Instance.HideTooltip();
     void SeedDrop() => TooltipManager.Instance.HideTooltip();
+
+    void NightChanged()
+    {
+        if (shopSeed.isGrabbing)
+            TooltipManager.Instance.HideTooltip();
+    }
+
+    void OnDestroy()
+    {
+        TimePresenter.OnNightChanged -= NightChanged;
+    }
 }

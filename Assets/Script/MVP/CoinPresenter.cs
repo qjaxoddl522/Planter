@@ -8,7 +8,7 @@ public class CoinPresenter : MonoBehaviour
     [SerializeField] CoinModel mCoin;
 
     [Header("View")]
-    [SerializeField] TextMeshProUGUI vCoinText;
+    [SerializeField] CoinViewText vCoinText;
 
     void Start()
     {
@@ -28,6 +28,7 @@ public class CoinPresenter : MonoBehaviour
             mCoin.Decrement(amount);
             return true;
         }
+        vCoinText.GlitterText();
         return false;
     }
 
@@ -43,9 +44,6 @@ public class CoinPresenter : MonoBehaviour
 
     void UpdateView()
     {
-        if (mCoin == null)
-            return;
-
-        vCoinText.text = mCoin.Coin.ToString();
+        vCoinText.UpdateText(mCoin.Coin.ToString());
     }
 }

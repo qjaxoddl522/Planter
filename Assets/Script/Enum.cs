@@ -49,3 +49,10 @@ public enum EnemyState
     HideDown,
     HideUp,
 }
+
+public enum XPos
+{
+    Left,
+    Right,
+    Both,
+}

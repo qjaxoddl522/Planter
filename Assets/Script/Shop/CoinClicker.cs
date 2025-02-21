@@ -48,13 +48,16 @@ public class CoinClicker : MonoBehaviour, ICoinClicker
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+            RaycastHit2D[] hitAll = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.gameObject == gameObject)
+            foreach (RaycastHit2D hit in hitAll)
             {
-                coinPresenter.GetCoin(1);
-                Instantiate(effectPrefab, transform.position, Quaternion.identity);
-                Destroy(gameObject);
+                if (hit.collider != null && hit.collider.gameObject == gameObject)
+                {
+                    coinPresenter.GetCoin(1);
+                    Instantiate(effectPrefab, transform.position, Quaternion.identity);
+                    Destroy(gameObject);
+                }
             }
         }
     }

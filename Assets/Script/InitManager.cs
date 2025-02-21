@@ -12,9 +12,7 @@ public class InitManager : MonoBehaviour
     void Awake()
     {
         Application.targetFrameRate = 60;
-
         loader = SystemLoader.Instance;
-        loader.Register<IShopManager>(GetComponent<ShopManager>());
     }
 
     void Start()
