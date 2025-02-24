@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Shovel : MonoBehaviour
 {
+    [SerializeField] TimePresenter timePresenter;
     bool isGrabbing = false;
     Vector2 initPos;
 
@@ -14,14 +15,17 @@ public class Shovel : MonoBehaviour
 
     void Update()
     {
-        if (TimePresenter.isDaytime && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
-                isGrabbing = true;
+                if (TimePresenter.isDaytime)
+                    isGrabbing = true;
+                else
+                    timePresenter.ShakeIcon();
             }
         }
 

@@ -12,7 +12,12 @@ public interface IPlantable
     void DestroyPlant();
 }
 
-public abstract class PlantBase : MonoBehaviour, IPlantable
+public interface IHitable
+{
+    void TakeDamage(int damage);
+}
+
+public abstract class PlantBase : MonoBehaviour, IPlantable, IHitable
 {
     [Header("Interface")]
     public Vector2 centerPos { get; set; }
@@ -101,16 +106,17 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
             Instantiate(effectPrefab, centerPos, Quaternion.identity);
             plantSpot.DigOut();
         }
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.HitPlant);
         flashEffect.PlayWhiteFlash();
     }
 
     public void Heal(int damage)
     {
         Hp += damage;
-        Instantiate(healParticlePrefab, centerPos, Quaternion.identity);
+        Instantiate(healParticlePrefab, centerPos, Quaternion.identity, transform);
     }
 
-    protected Transform FindClosestEnemy()
+    protected virtual Transform FindClosestEnemy()
     {
         EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
         Transform closestEnemy = null;
@@ -123,7 +129,7 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
                 continue;
             
             float distance = Mathf.Abs(transform.position.x - enemy.transform.position.x);
-            if (distance <= closestDistance && !enemy.transform.GetComponent<IEnemy>().IsHidden)
+            if (distance <= closestDistance && !enemy.IsHidden)
             {
                 closestDistance = distance;
                 closestEnemy = enemy.transform;
@@ -133,7 +139,7 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
         return closestEnemy;
     }
 
-    protected List<Transform> FindAllEnemies()
+    protected virtual List<Transform> FindAllEnemies()
     {
         EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
         List<Transform> resultEnemies = new List<Transform>();
@@ -144,7 +150,7 @@ public abstract class PlantBase : MonoBehaviour, IPlantable
             (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
                 continue;
 
-            if (!enemy.transform.GetComponent<IEnemy>().IsHidden)
+            if (!enemy.IsHidden)
             {
                 resultEnemies.Add(enemy.transform);
             }

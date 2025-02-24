@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Hermitcrab
   m_EditorClassIdentifier: 
   enemyID: 2
-  hp: 50
+  hp: 10
   speed: 0.5
   damage: 3
   range: 1
-  attackPeriod: 5
+  attackPeriod: 4
   enemyPrefab: {fileID: 3346895005549479815, guid: 4793025746f21e546a14773933328dfc, type: 3}
   IdleSprite: {fileID: -2210999277062329814, guid: ebf7a9edf7e080e47997f2566f395e6f, type: 3}

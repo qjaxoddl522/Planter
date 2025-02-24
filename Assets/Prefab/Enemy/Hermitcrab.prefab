@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8274845627367331910}
   - component: {fileID: 5821031302686671434}
   - component: {fileID: 9195039670626912926}
-  m_Layer: 0
+  - component: {fileID: 4037754882349529258}
+  m_Layer: 7
   m_Name: Hermitcrab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,15 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a30fa6801e88e48a48bdc6707b1a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 0
+  enemyData: {fileID: 0}
   hp: 0
-  speed: 0
-  damage: 0
-  range: 0
-  attackMaxCooltime: 0
   attackCooltime: 0
   isHidden: 0
   effectPrefab: {fileID: 6618133785311061286, guid: 3c616267cc23ba24c998ae2ba1a935d4, type: 3}
+  healParticlePrefab: {fileID: 5508157766434350156, guid: d99150420d6441b428769237f042ddbb, type: 3}
   resistanceEffect: {fileID: 5626082416271902460}
 --- !u!114 &8274845627367331910
 MonoBehaviour:
@@ -116,7 +114,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 255024373
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2210999277062329814, guid: ebf7a9edf7e080e47997f2566f395e6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -150,6 +148,52 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &4037754882349529258
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346895005549479815}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.25}
+    oldSize: {x: 1.5, y: 1.5}
+    newSize: {x: 1.5, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 0.8}
+  m_EdgeRadius: 0
 --- !u!1001 &3597502377956222307
 PrefabInstance:
   m_ObjectHideFlags: 0

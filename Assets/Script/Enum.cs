@@ -39,6 +39,7 @@ public enum Enemy
     DungBeetle,
     HermitCrab,
     Earthworm,
+    Bee,
 }
 
 public enum EnemyState
@@ -55,4 +56,10 @@ public enum XPos
     Left,
     Right,
     Both,
+}
+
+public enum Layer
+{
+    Plant = 6,
+    Enemy = 7,
 }

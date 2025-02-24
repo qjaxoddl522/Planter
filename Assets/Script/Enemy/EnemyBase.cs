@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface IEnemy
 {
+    EnemyData enemyData { get; set; }
     void TakeDamage(int damage, Seed attacker);
+    void Heal(int damage);
     void SpeedAffect(float value, StatModifierType type, float duration);
     bool IsHidden { get; set; }
 }
@@ -22,7 +24,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     public int Hp
     {
         get { return hp; }
-        set { hp = value; }
+        set { hp = Math.Min(value, MaxHp); }
     }
 
     [SerializeField] Stat speed;
@@ -54,10 +56,11 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
     protected bool isDirectionLeft;
-    protected PlantBase closestPlant;
+    protected Transform closestPlant;
 
     [Header("Prefab")]
     [SerializeField] GameObject effectPrefab;
+    [SerializeField] GameObject healParticlePrefab;
 
     protected EnemyState currentState;
     protected FlashEffect flashEffect;
@@ -85,7 +88,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         ChangeState(EnemyState.Walking);
     }
 
-    void Update()
+    protected virtual void Update()
     {
         AttackCooltime -= Time.deltaTime;
         spriteRenderer.sortingOrder = Modify.GetDepth(transform.position.y);
@@ -115,7 +118,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     protected bool CheckForAttack()
     {
-        closestPlant = FindClosestPlant();
+        closestPlant = FindClosestTarget();
         if (closestPlant != null)
         {
             float distanceToPlant = Mathf.Abs(transform.position.x - closestPlant.transform.position.x);
@@ -124,30 +127,17 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         return false;
     }
 
-    protected PlantBase FindClosestPlant()
+    protected Transform FindClosestTarget()
     {
-        PlantBase[] targets = FindObjectsByType<PlantBase>(FindObjectsSortMode.None);
-        PlantBase closestTarget = null;
-        float closestDistance = Mathf.Infinity;
-        float x = transform.position.x;
-
-        foreach (PlantBase target in targets)
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position,
+            new Vector2(isDirectionLeft ? -1 : 1, 0),
+            Mathf.Infinity,
+            1 << (int)Layer.Plant);
+        if (hitInfo.collider != null)
         {
-            float targetX = target.transform.position.x;
-
-            if ((isDirectionLeft && (x < targetX || targetX < 0)) ||
-            (!isDirectionLeft && (x > targetX || targetX > 0)))
-                continue;
-
-            float distance = Mathf.Abs(x - targetX);
-            if (distance <= closestDistance)
-            {
-                closestDistance = distance;
-                closestTarget = target;
-            }
+            return hitInfo.collider.gameObject.transform;
         }
-
-        return closestTarget;
+        return null;
     }
 
     public virtual void ChangeState(EnemyState newState)
@@ -187,7 +177,11 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     protected virtual void AttackDamage()
     {
-        closestPlant?.TakeDamage(Damage);
+        if (closestPlant != null)
+        {
+            IHitable target = closestPlant.GetComponent<IHitable>();
+            target?.TakeDamage(Damage);
+        }
     }
 
     public void EndAttack()
@@ -203,6 +197,12 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
             DestroyEnemy();
         }
         flashEffect.PlayWhiteFlash();
+    }
+
+    public void Heal(int damage)
+    {
+        Hp += damage;
+        Instantiate(healParticlePrefab, transform.position, Quaternion.identity, transform);
     }
 
     public void SpeedAffect(float value, StatModifierType type, float duration)

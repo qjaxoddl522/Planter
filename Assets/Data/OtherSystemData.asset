@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b617944fac88584885afc22ba56f8cb, type: 3}
   m_Name: OtherSystemData
   m_EditorClassIdentifier: 
-  maxDayTime: 30
+  maxDayTime: 120
+  initTime: 0
   initCoin: 15
+  initSpotLength: 1
+  maxSpotLength: 4
+  spotExtendPrice: 3
   fertilizerPrice: 2

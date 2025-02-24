@@ -55,6 +55,7 @@ public class CoinClicker : MonoBehaviour, ICoinClicker
                 if (hit.collider != null && hit.collider.gameObject == gameObject)
                 {
                     coinPresenter.GetCoin(1);
+                    AudioManager.Instance.PlaySFX(AudioManager.SFX.EarnCoin);
                     Instantiate(effectPrefab, transform.position, Quaternion.identity);
                     Destroy(gameObject);
                 }

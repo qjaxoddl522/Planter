@@ -27,9 +27,9 @@ public class Earthworm : EnemyBase
     {
         // 위치 조정
         float plantDist = int.MaxValue;
-        var plant = FindClosestPlant();
+        Transform plant = FindClosestTarget();
         if (plant != null)
-            plantDist = Mathf.Abs(plant.transform.position.x - transform.position.x) - Range;
+            plantDist = Mathf.Abs(plant.position.x - transform.position.x) - Range;
         transform.position += new Vector3(Mathf.Min(hideMoveDist, plantDist), 0) * (isDirectionLeft ? -1 : 1);
         
         ChangeState(EnemyState.HideUp);
@@ -41,7 +41,7 @@ public class Earthworm : EnemyBase
         ChangeState(EnemyState.Walking);
     }
 
-    void Update()
+    protected override void Update()
     {
         AttackCooltime -= Time.deltaTime;
 

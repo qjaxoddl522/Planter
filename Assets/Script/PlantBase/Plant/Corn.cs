@@ -10,6 +10,7 @@ public class Corn : PlantBase
         Transform target = FindClosestEnemy();
         if (target != null && Mathf.Abs(target.position.x - transform.position.x) <= AttackRange)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.ShootPlant);
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<CornBullet>().Initialize(Power, target);
         }

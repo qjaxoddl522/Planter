@@ -6,6 +6,7 @@ public interface IShopSeed
 {
     IShopManager shopManager { get; set; }
     CoinPresenter coinPresenter { get; set; }
+    TimePresenter timePresenter { get; set; }
     PlantData plantData { get; set; }
     bool isAvailable { get; set; }
 
@@ -24,6 +25,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
     public IShopManager shopManager { get; set; }
     public CoinPresenter coinPresenter { get; set; }
+    public TimePresenter timePresenter { get; set; }
     public PlantData plantData { get; set; }
     public bool isAvailable { get; set; }
     public bool isGrabbing { get; set; }
@@ -62,20 +64,23 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && TimePresenter.isDaytime)
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
-                if (isAvailable)
+                if (TimePresenter.isDaytime)
                 {
-                    isGrabbing = true;
+                    if (isAvailable)
+                        isGrabbing = true;
+                    else if (coinPresenter.TryBuy(plantData.unlockPrice))
+                        UnlockSeed();
                 }
-                else if (coinPresenter.TryBuy(plantData.unlockPrice))
+                else
                 {
-                    UnlockSeed();
+                    timePresenter.ShakeIcon();
                 }
             }
         }
@@ -90,6 +95,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                 OnSeedDropped?.Invoke();
 
                 IPlantSpot plantSpot = null;
+                Vector2 spotPos = transform.position;
                 RaycastHit2D[] hitAll = Physics2D.RaycastAll(mousePos, Vector2.zero);
                 foreach (RaycastHit2D hit in hitAll)
                 {
@@ -99,6 +105,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                         if (spot != null)
                         {
                             plantSpot = spot;
+                            spotPos = hit.collider.transform.position;
                             break;
                         }
                     }
@@ -107,6 +114,8 @@ public class ShopSeed : MonoBehaviour, IShopSeed
                 if (plantSpot != null && plantSpot.MyPlant == null && shopManager.TryBuy(plantData.price))
                 {
                     plantSpot.Plant(plantData);
+                    Instantiate(effectPrefab, spotPos, Quaternion.identity);
+                    AudioManager.Instance.PlaySFX(AudioManager.SFX.Pop);
                     shopManager.RefreshSeed(plantData.seedID);
                 }
                 else
@@ -127,6 +136,8 @@ public class ShopSeed : MonoBehaviour, IShopSeed
         Destroy(lockInstance);
         isAvailable = true;
         OnSeedUnlocked?.Invoke(this);
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.Weep);
     }
 
     public void NightChanged()

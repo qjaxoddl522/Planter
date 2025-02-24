@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class TimeViewSlider : MonoBehaviour
 {
     [SerializeField] OtherSystemData sysData;
+    [SerializeField] GameObject sliderHandle;
     Slider slider;
 
     void Awake()
@@ -19,5 +20,10 @@ public class TimeViewSlider : MonoBehaviour
     public void UpdateSlider(float value)
     {
         slider.value = value;
+    }
+
+    public void HideSliderHandle()
+    {
+        sliderHandle.SetActive(false);
     }
 }

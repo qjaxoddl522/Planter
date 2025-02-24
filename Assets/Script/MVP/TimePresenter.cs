@@ -23,6 +23,11 @@ public class TimePresenter : MonoBehaviour
         mTime.OnNightChanged += NightUpdate;
     }
 
+    public void ShakeIcon()
+    {
+        vTimeSunMoon.ShakeIcon();
+    }
+
     void DayTimeUpdate()
     {
         vTimeSlider.UpdateSlider(mTime.GameTime);
@@ -30,10 +35,21 @@ public class TimePresenter : MonoBehaviour
 
     void DayUpdate()
     {
+        if (waveSpawner.IsWaveEnd(mTime.Day))
+        {
+            Debug.Log("Game Clear!");
+            mTime.IsGamePause = true;
+            vTimeSlider.HideSliderHandle();
+            return;
+        }
+
         vTimeSunMoon.UpdateIcon(true);
         vTimeDark.UpdateDarkness(true);
+        waveSpawner.InjectWaveInfo(mTime.Day);
         isDaytime = true;
         OnDaytimeChanged?.Invoke();
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.DayComplete);
     }
 
     void NightUpdate()
@@ -41,7 +57,10 @@ public class TimePresenter : MonoBehaviour
         vTimeSunMoon.UpdateIcon(false);
         vTimeDark.UpdateDarkness(false);
         waveSpawner.WaveStart(mTime.Day);
+        waveSpawner.DestroyEnemyInfo();
         isDaytime = false;
         OnNightChanged?.Invoke();
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.NightStart);
     }
 }

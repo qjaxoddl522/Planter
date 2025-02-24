@@ -41,13 +41,16 @@ public class TimeModel : MonoBehaviour
         private set { isDaytime = value; }
     }
 
+    public bool IsGamePause { get; set; }
+
     void Start()
     {
         isEnemyEliminated = true;
         
-        GameTime = 0;
+        GameTime = sysData.maxDayTime * sysData.initTime;
         Day = 1;
         IsDaytime = true;
+        IsGamePause = false;
 
         waveSpawner.OnEnemyEliminated += () => isEnemyEliminated = true;
     }
@@ -67,7 +70,7 @@ public class TimeModel : MonoBehaviour
             IsDaytime = true;
             Day++;
         }
-        else
+        else if (!IsGamePause)
         {
             GameTime = Mathf.Min(sysData.maxDayTime, GameTime + Time.deltaTime);
         }

@@ -12,10 +12,9 @@ public interface IShopManager
 public class ShopManager : MonoBehaviour, IShopManager
 {
     [SerializeField] CoinPresenter coinPresenter;
+    [SerializeField] TimePresenter timePresenter;
     [SerializeField] Transform shopTransform;
-    [SerializeField] Transform shopPanelTransform;
     [SerializeField] GameObject buySeedPrefab;
-    [SerializeField] TimeModel timeModel;
     [SerializeField] PlantData[] plantData;
 
     Dictionary<Seed, GameObject> shopSeedObj;
@@ -45,11 +44,12 @@ public class ShopManager : MonoBehaviour, IShopManager
         seedInstance.name = plantData[i].ToString();
         seedInstance.transform.position = new Vector3(
             (-plantData.Length / 2 + i) * 1f + (plantData.Length % 2 == 0 ? 0.5f : 0),
-            shopPanelTransform.position.y);
+            shopTransform.position.y);
 
         var shopSeed = seedInstance.GetComponent<IShopSeed>();
         shopSeed.shopManager = this;
         shopSeed.coinPresenter = coinPresenter;
+        shopSeed.timePresenter = timePresenter;
         shopSeed.plantData = plantData[i];
         shopSeed.isAvailable = isSeedAvailable[seed];
         shopSeed.OnSeedUnlocked += HandleSeedUnlocked;

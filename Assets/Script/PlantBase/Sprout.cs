@@ -82,6 +82,8 @@ public class Sprout : MonoBehaviour, IPlantable
            .Insert(growAnimationDuration / 4 * 3, 
            spriteTransform.DOScale(1.0f, growAnimationDuration / 4).SetEase(Ease.OutCubic))
            ;
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.Weep);
     }
 
     void HandleGrowthComplete()
@@ -90,6 +92,8 @@ public class Sprout : MonoBehaviour, IPlantable
         sproutSpriteTransform.GetComponent<SproutAway>().isAway = true;
         plantSpriteRenderer.maskInteraction = SpriteMaskInteraction.None;
         spriteTransform.DOJump(targetPos, 1f, 1, 1f).SetEase(Ease.Linear).OnComplete(Plant);
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.Pop);
     }
 
     void Plant()

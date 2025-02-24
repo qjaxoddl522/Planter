@@ -18,4 +18,25 @@ public class Mushroom : PlantBase
             }
         }
     }
+
+    // 벌은 인식하지 못하도록 오버라이딩
+    protected override List<Transform> FindAllEnemies()
+    {
+        EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
+        List<Transform> resultEnemies = new List<Transform>();
+
+        foreach (EnemyBase enemy in enemies)
+        {
+            if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
+            (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
+                continue;
+
+            if (!enemy.IsHidden && enemy.enemyData.enemyID != Enemy.Bee)
+            {
+                resultEnemies.Add(enemy.transform);
+            }
+        }
+
+        return resultEnemies;
+    }
 }

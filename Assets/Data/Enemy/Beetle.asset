@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyID: 0
   hp: 10
   speed: 0.7
-  damage: 3
+  damage: 2
   range: 1
   attackPeriod: 3
   enemyPrefab: {fileID: 3346895005549479815, guid: c52c2ecb7819db24c8950c3ce8227436, type: 3}
