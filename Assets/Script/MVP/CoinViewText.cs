@@ -2,14 +2,21 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class CoinViewText : MonoBehaviour
+public class CoinViewText : MonoBehaviour, IHidedUI
 {
-    TextMeshProUGUI coinText;
+    [SerializeField] TextMeshProUGUI coinText;
     Tween glitterTween;
+    Vector3 initPos;
 
-    void Awake()
+    public void InitPosision(float dist)
     {
-        coinText = GetComponent<TextMeshProUGUI>();
+        initPos = transform.position;
+        transform.position += new Vector3(0, dist, 0);
+    }
+
+    public void SlideIn(float duration)
+    {
+        transform.DOMove(initPos, duration).SetEase(Ease.OutCubic);
     }
 
     public void UpdateText(string str)

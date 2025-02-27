@@ -18,7 +18,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     [Header("Status")]
     [SerializeField] Stat maxHp;
-    protected int MaxHp { get { return maxHp.FinalValueInt; } }
+    public int MaxHp { get { return maxHp.FinalValueInt; } }
 
     [SerializeField] int hp;
     public int Hp
@@ -161,7 +161,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         {
             case EnemyState.Idle:
                 animator.SetTrigger("Idle");
-                spriteRenderer.sprite = enemyData.IdleSprite;
+                spriteRenderer.sprite = enemyData.idleSprite;
                 break;
             case EnemyState.Walking:
                 animator.SetTrigger("Walk");
@@ -197,6 +197,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
             DestroyEnemy();
         }
         flashEffect.PlayWhiteFlash();
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.HitEnemy);
     }
 
     public void Heal(int damage)

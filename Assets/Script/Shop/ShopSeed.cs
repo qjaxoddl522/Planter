@@ -45,7 +45,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
     void Start()
     {
-        initPos = transform.position;
+        initPos = transform.localPosition;
         spriteRenderer.sprite = plantData.seedSprite;
         
         if (isAvailable)
@@ -126,7 +126,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
         }
     }
 
-    void ReturnInitPos() => transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+    void ReturnInitPos() => transform.DOLocalMove(initPos, 0.3f).SetEase(Ease.OutCirc);
 
     public void UnlockSeed()
     {

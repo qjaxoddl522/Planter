@@ -3,16 +3,24 @@ using UnityEngine;
 
 public class Fertilizer : MonoBehaviour
 {
+    const int grabOrderDiff = 3;
+
     [SerializeField] CoinPresenter coinPresenter;
     [SerializeField] TimePresenter timePresenter;
     public OtherSystemData sysData;
     public bool isGrabbing = false;
     Vector2 initPos;
+    SpriteRenderer spriteRenderer;
+
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
-        initPos = transform.position;
         TimePresenter.OnNightChanged += NightChanged;
+        initPos = transform.localPosition;
     }
 
     void Update()
@@ -25,7 +33,10 @@ public class Fertilizer : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
                 if (TimePresenter.isDaytime)
+                {
                     isGrabbing = true;
+                    spriteRenderer.sortingOrder += grabOrderDiff;
+                }
                 else
                     timePresenter.ShakeIcon();
             }
@@ -58,12 +69,16 @@ public class Fertilizer : MonoBehaviour
                 {
                     plantBase.Heal(plantBase.MaxHp);
                 }
-                transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+                spriteRenderer.sortingOrder -= grabOrderDiff;
+                ReturnInitPos();
             }
         }
     }
 
-    void ReturnInitPos() => transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+    void ReturnInitPos()
+    {
+        transform.DOLocalMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+    }
 
     void NightChanged()
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
-using DG.Tweening;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public interface IShopManager
 {
@@ -9,7 +9,7 @@ public interface IShopManager
     bool TryBuy(int amount);
 }
 
-public class ShopManager : MonoBehaviour, IShopManager
+public class ShopManager : MonoBehaviour, IShopManager, IHidedUI
 {
     [SerializeField] CoinPresenter coinPresenter;
     [SerializeField] TimePresenter timePresenter;
@@ -19,6 +19,18 @@ public class ShopManager : MonoBehaviour, IShopManager
 
     Dictionary<Seed, GameObject> shopSeedObj;
     Dictionary<Seed, bool> isSeedAvailable;
+    Vector2 initPos;
+
+    public void InitPosision(float dist)
+    {
+        initPos = shopTransform.position;
+        shopTransform.position -= new Vector3(0, dist, 0);
+    }
+
+    public void SlideIn(float duration)
+    {
+        shopTransform.DOMove(initPos, duration).SetEase(Ease.OutCubic);
+    }
 
     void Start()
     {
@@ -42,9 +54,8 @@ public class ShopManager : MonoBehaviour, IShopManager
         var seedInstance = Instantiate(buySeedPrefab, shopTransform);
         shopSeedObj[seed] = seedInstance;
         seedInstance.name = plantData[i].ToString();
-        seedInstance.transform.position = new Vector3(
-            (-plantData.Length / 2 + i) * 1f + (plantData.Length % 2 == 0 ? 0.5f : 0),
-            shopTransform.position.y);
+        seedInstance.transform.localPosition = new Vector3(
+            (-plantData.Length / 2 + i) * 1f + (plantData.Length % 2 == 0 ? 0.5f : 0), 0);
 
         var shopSeed = seedInstance.GetComponent<IShopSeed>();
         shopSeed.shopManager = this;
@@ -65,7 +76,7 @@ public class ShopManager : MonoBehaviour, IShopManager
     {
         isSeedAvailable[shopSeed.plantData.seedID] = true;
     }
-    
+
     // 프리팹을 위한 메서드 옮기기
     public bool TryBuy(int amount)
     {

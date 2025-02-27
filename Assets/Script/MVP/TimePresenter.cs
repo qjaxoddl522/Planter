@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class TimePresenter : MonoBehaviour
@@ -12,7 +13,6 @@ public class TimePresenter : MonoBehaviour
     [SerializeField] TimeViewDark vTimeDark;
     [SerializeField] WaveSpawner waveSpawner;
 
-    public static Action OnDaytimeChanged;
     public static Action OnNightChanged;
     public static bool isDaytime;
 
@@ -28,6 +28,13 @@ public class TimePresenter : MonoBehaviour
         vTimeSunMoon.ShakeIcon();
     }
 
+    public IEnumerator DayStart()
+    {
+        isDaytime = true;
+        yield return new WaitForSeconds(2f);
+        mTime.DayStart();
+    }
+
     void DayTimeUpdate()
     {
         vTimeSlider.UpdateSlider(mTime.GameTime);
@@ -40,6 +47,8 @@ public class TimePresenter : MonoBehaviour
             Debug.Log("Game Clear!");
             mTime.IsGamePause = true;
             vTimeSlider.HideSliderHandle();
+            vTimeSunMoon.UpdateIcon(true);
+            vTimeDark.UpdateDarkness(true);
             return;
         }
 
@@ -47,16 +56,16 @@ public class TimePresenter : MonoBehaviour
         vTimeDark.UpdateDarkness(true);
         waveSpawner.InjectWaveInfo(mTime.Day);
         isDaytime = true;
-        OnDaytimeChanged?.Invoke();
 
-        AudioManager.Instance.PlaySFX(AudioManager.SFX.DayComplete);
+        if (mTime.Day > 1)
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.DayComplete);
     }
 
     void NightUpdate()
     {
         vTimeSunMoon.UpdateIcon(false);
         vTimeDark.UpdateDarkness(false);
-        waveSpawner.WaveStart(mTime.Day);
+        waveSpawner.WaveStart();
         waveSpawner.DestroyEnemyInfo();
         isDaytime = false;
         OnNightChanged?.Invoke();

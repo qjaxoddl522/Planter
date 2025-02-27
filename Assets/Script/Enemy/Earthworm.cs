@@ -93,7 +93,7 @@ public class Earthworm : EnemyBase
         {
             case EnemyState.Idle:
                 animator.SetTrigger("Idle");
-                spriteRenderer.sprite = enemyData.IdleSprite;
+                spriteRenderer.sprite = enemyData.idleSprite;
                 break;
             case EnemyState.Walking:
                 animator.SetTrigger("Walk");

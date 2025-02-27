@@ -12,5 +12,6 @@ public class EnemyData : ScriptableObject
     public float attackPeriod;
 
     public GameObject enemyPrefab;
-    public Sprite IdleSprite;
+    public Sprite idleSprite;
+    public DescriptionData description;
 }

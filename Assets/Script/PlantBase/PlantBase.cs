@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public interface IPlantable
 {
@@ -60,18 +61,18 @@ public abstract class PlantBase : MonoBehaviour, IPlantable, IHitable
     [SerializeField] GameObject effectPrefab;
     [SerializeField] GameObject healParticlePrefab;
 
-    void Awake()
+    protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         flashEffect = GetComponent<FlashEffect>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         maxHp = new Stat(plantData.hp);
         Hp = MaxHp;
         maxCooltime = new Stat(plantData.abilityPeriod);
-        Cooltime = MaxCooltime;
+        Cooltime = 0;
         attackRange = new Stat(plantData.abilityRange);
         power = new Stat(plantData.abilityPower);
 
@@ -80,17 +81,12 @@ public abstract class PlantBase : MonoBehaviour, IPlantable, IHitable
             d.data = plantData.description;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (Cooltime > 0)
-        {
             Cooltime -= Time.deltaTime;
-        }
-        else
-        {
+        else if (FindClosestEnemy())
             Ability();
-            Cooltime = MaxCooltime;
-        }
     }
 
     public void DestroyPlant()
@@ -157,6 +153,11 @@ public abstract class PlantBase : MonoBehaviour, IPlantable, IHitable
         }
 
         return resultEnemies;
+    }
+
+    protected void InitCooltime()
+    {
+        Cooltime = MaxCooltime + Random.Range(-MaxCooltime * 0.05f, MaxCooltime * 0.05f);
     }
 
     protected abstract void Ability();

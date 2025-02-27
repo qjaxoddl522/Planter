@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class CornBullet : MonoBehaviour
 {
+    float jumpPower = 2f;  // 점프(곡선) 높이 조절
+    float duration = 1.5f;   // 전체 이동 시간
+
     int damage;
     Transform target;
 
@@ -11,9 +14,6 @@ public class CornBullet : MonoBehaviour
         this.damage = damage;
         this.target = target;
     }
-
-    public float jumpPower = 2f;  // 점프(곡선) 높이 조절
-    public float duration = 1.5f;   // 전체 이동 시간
 
     void Start()
     {

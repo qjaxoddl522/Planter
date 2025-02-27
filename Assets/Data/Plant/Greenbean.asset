@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seedID: 1
   unlockPrice: 0
-  price: 1
+  price: 2
   hp: 10
-  growthTime: 5
+  growthTime: 10
   abilityPeriod: 2
   abilityRange: 6
   abilityPower: 2

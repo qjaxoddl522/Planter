@@ -13,6 +13,8 @@ public class Corn : PlantBase
             AudioManager.Instance.PlaySFX(AudioManager.SFX.ShootPlant);
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<CornBullet>().Initialize(Power, target);
+
+            InitCooltime();
         }
     }
 }

@@ -56,5 +56,11 @@ TagManager:
   - name: Effect
     uniqueID: 3502283487
     locked: 0
+  - name: Tooltip
+    uniqueID: 288212645
+    locked: 0
+  - name: Fade
+    uniqueID: 3553142483
+    locked: 0
   m_RenderingLayers:
   - Default

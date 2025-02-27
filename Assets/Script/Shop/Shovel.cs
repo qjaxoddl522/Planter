@@ -3,14 +3,22 @@ using UnityEngine;
 
 public class Shovel : MonoBehaviour
 {
+    const int grabOrderDiff = 3;
+
     [SerializeField] TimePresenter timePresenter;
     bool isGrabbing = false;
     Vector2 initPos;
+    SpriteRenderer spriteRenderer;
+
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
-        initPos = transform.position;
         TimePresenter.OnNightChanged += NightChanged;
+        initPos = transform.localPosition;
     }
 
     void Update()
@@ -23,7 +31,10 @@ public class Shovel : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
                 if (TimePresenter.isDaytime)
+                {
                     isGrabbing = true;
+                    spriteRenderer.sortingOrder += grabOrderDiff;
+                }
                 else
                     timePresenter.ShakeIcon();
             }
@@ -56,16 +67,28 @@ public class Shovel : MonoBehaviour
                 {
                     plantSpot.DigOut();
                 }
+                spriteRenderer.sortingOrder -= grabOrderDiff;
                 ReturnInitPos();
             }
         }
     }
 
-    void ReturnInitPos() => transform.DOMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+    void ReturnInitPos()
+    {
+        if (transform != null)
+            transform.DOLocalMove(initPos, 0.3f).SetEase(Ease.OutCirc);
+        else
+            Debug.LogWarning("Transform NULL!");
+    }
 
     void NightChanged()
     {
         isGrabbing = false;
         ReturnInitPos();
     }
+
+    /*void OnDestroy()
+    {
+        TimePresenter.OnNightChanged -= NightChanged;
+    }*/
 }

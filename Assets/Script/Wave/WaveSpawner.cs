@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public class WaveListWrapper
+{
+    public List<WaveData> waves;
+}
+
 public class WaveSpawner : MonoBehaviour
 {
-    const float spawnXpos = 11;
+    const float spawnXpos = 10;
 
     [SerializeField] OtherSystemData sysData;
-    [SerializeField] List<WaveData> waves;
+    [SerializeField] List<WaveListWrapper> waveWrappers;
 
     public event Action OnEnemyEliminated;
+    WaveData nextWave;
     int enemyCount = 0;
     WaveInfoManager waveInfoManager;
 
@@ -22,8 +29,9 @@ public class WaveSpawner : MonoBehaviour
 
     public void InjectWaveInfo(int day)
     {
-        WaveData wave = waves[day - 1];
-        foreach (SpawnData spawn in wave.spawnData)
+        int index = Random.Range(0, waveWrappers[day - 1].waves.Count);
+        nextWave = waveWrappers[day - 1].waves[index];
+        foreach (SpawnData spawn in nextWave.spawnData)
         {
             if (spawn.xPos == XPos.Left)
                 waveInfoManager.leftEnemies.Add((spawn.enemy, spawn.amount));
@@ -42,12 +50,12 @@ public class WaveSpawner : MonoBehaviour
 
     public bool IsWaveEnd(int day)
     {
-        return waves.Count < day;
+        return waveWrappers.Count < day;
     }
 
-    public void WaveStart(int day)
+    public void WaveStart()
     {
-        SpawnWave(waves[day - 1]);
+        SpawnWave(nextWave);
     }
 
     void SpawnWave(WaveData wave)
@@ -64,6 +72,7 @@ public class WaveSpawner : MonoBehaviour
         float nightTime = sysData.maxDayTime / 2;
         float spawnInterval = (nightTime * 4 / 5) / spawn.amount;
         enemyCount += spawn.amount;
+        Debug.Log(enemyCount);
         for (int i = 0; i < spawn.amount; i++)
         {
             float yPos = Random.Range(-1, 2);
@@ -91,7 +100,7 @@ public class WaveSpawner : MonoBehaviour
                     OnEnemyEliminated?.Invoke();
             };
 
-            yield return new WaitForSeconds(spawnInterval + Random.Range(-(nightTime * randomRate), nightTime * randomRate));
+            yield return new WaitForSeconds(spawnInterval + Random.Range(-(nightTime * randomRate), nightTime * randomRate / 2));
         }
     }
 }

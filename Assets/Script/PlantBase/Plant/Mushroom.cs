@@ -15,6 +15,8 @@ public class Mushroom : PlantBase
             {
                 var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 bullet.GetComponent<MushroomBullet>().Initialize(Power, target);
+
+                InitCooltime();
             }
         }
     }

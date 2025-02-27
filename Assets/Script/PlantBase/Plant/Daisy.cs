@@ -5,17 +5,14 @@ public class Daisy : PlantBase
     [Header("Daisy")]
     [SerializeField] GameObject coinClicker;
 
-    void Update()
+    protected override void Update()
     {
         if (TimePresenter.isDaytime)
         {
             if (Cooltime > 0)
                 Cooltime -= Time.deltaTime;
             else
-            {
                 Ability();
-                Cooltime = MaxCooltime;
-            }
         }
     }
 
@@ -24,7 +21,10 @@ public class Daisy : PlantBase
         var coinInst = Instantiate(coinClicker, transform.position, Quaternion.identity);
         coinInst.transform.parent = transform.parent;
         ICoinClicker coin = coinInst.GetComponent<ICoinClicker>();
-        coin.coinPresenter = coinPresenter;
+        coin.CoinAmount = Power;
+        coin.CoinPresenter = coinPresenter;
         coin.SetSpawnBehavior(new JumpSpawn());
+
+        InitCooltime();
     }
 }

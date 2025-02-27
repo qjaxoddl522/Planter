@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Beetle
   m_EditorClassIdentifier: 
   enemyID: 0
-  hp: 10
-  speed: 0.7
+  hp: 5
+  speed: 0.8
   damage: 2
   range: 1
-  attackPeriod: 3
+  attackPeriod: 2.5
   enemyPrefab: {fileID: 3346895005549479815, guid: c52c2ecb7819db24c8950c3ce8227436, type: 3}
-  IdleSprite: {fileID: 2631103260818236658, guid: 61269d7e0b6097a4d90aef9c0ecebdf3, type: 3}
+  idleSprite: {fileID: 2631103260818236658, guid: 61269d7e0b6097a4d90aef9c0ecebdf3, type: 3}
+  description: {fileID: 11400000, guid: 6b050bd19ef8a7c4aa34ee48b67b8c2b, type: 2}

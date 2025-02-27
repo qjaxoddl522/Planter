@@ -18,6 +18,6 @@ public class InitManager : MonoBehaviour
     void Start()
     {
         loader.InitAll();
-        AudioManager.Instance.PlayBGM(true);
+        AudioManager.Instance.PlayBGM(AudioManager.BGM.DayAndNight);
     }
 }

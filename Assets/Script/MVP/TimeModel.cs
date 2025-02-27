@@ -30,7 +30,8 @@ public class TimeModel : MonoBehaviour
         private set
         {
             day = value;
-            OnDaytimeChanged?.Invoke();
+            if (GameProcessManager.Instance.isGameStart)
+                OnDaytimeChanged?.Invoke();
         }
     }
 
@@ -48,7 +49,7 @@ public class TimeModel : MonoBehaviour
         isEnemyEliminated = true;
         
         GameTime = sysData.maxDayTime * sysData.initTime;
-        Day = 1;
+        //Day = 1;
         IsDaytime = true;
         IsGamePause = false;
 
@@ -70,9 +71,14 @@ public class TimeModel : MonoBehaviour
             IsDaytime = true;
             Day++;
         }
-        else if (!IsGamePause)
+        else if (!IsGamePause && GameProcessManager.Instance.isGameStart)
         {
             GameTime = Mathf.Min(sysData.maxDayTime, GameTime + Time.deltaTime);
         }
+    }
+
+    public void DayStart()
+    {
+        Day = 1;
     }
 }

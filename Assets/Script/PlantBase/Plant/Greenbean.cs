@@ -13,6 +13,8 @@ public class Greenbean : PlantBase
             AudioManager.Instance.PlaySFX(AudioManager.SFX.ShootPlant);
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<GreenbeanBullet>().Initialize(Power, target);
+
+            InitCooltime();
         }
     }
 

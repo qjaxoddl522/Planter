@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Mushroom
   m_EditorClassIdentifier: 
   seedID: 3
-  unlockPrice: 1
-  price: 3
-  hp: 100
-  growthTime: 5
+  unlockPrice: 10
+  price: 6
+  hp: 25
+  growthTime: 20
   abilityPeriod: 3
   abilityRange: 3
-  abilityPower: 2
+  abilityPower: 4
   seedSprite: {fileID: 161624645, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: 621521822, guid: 743e5a4d4e1dc934eb68d56f28da2900, type: 3}
   plantPrefab: {fileID: 7689923538928827762, guid: aced3f2abec460544adf2dc6e47002db, type: 3}
