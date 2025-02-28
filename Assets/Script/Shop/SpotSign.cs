@@ -18,6 +18,13 @@ public class SpotSign : MonoBehaviour, ISpotSign
     public event Action<bool> OnSpotExtended;
     public int price { get; set; }
 
+    int initPrice;
+
+    void Start()
+    {
+        initPrice = price;
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -31,6 +38,7 @@ public class SpotSign : MonoBehaviour, ISpotSign
                 {
                     if (coinPresenter.TryBuy(price))
                     {
+                        price += initPrice;
                         OnSpotExtended?.Invoke(isLeft);
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.CashMachine);
                         TooltipManager.Instance.HideTooltip();

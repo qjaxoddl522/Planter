@@ -21,10 +21,12 @@ public class WaveSpawner : MonoBehaviour
     WaveData nextWave;
     int enemyCount = 0;
     WaveInfoManager waveInfoManager;
+    StaticsManager staticsManager;
 
     void Awake()
     {
         waveInfoManager = GetComponent<WaveInfoManager>();
+        staticsManager = GetComponent<StaticsManager>();
     }
 
     public void InjectWaveInfo(int day)
@@ -62,6 +64,8 @@ public class WaveSpawner : MonoBehaviour
     {
         foreach (SpawnData spawn in wave.spawnData)
         {
+            staticsManager.enemyCount[(int)spawn.enemy.enemyID] += spawn.amount;
+            enemyCount += spawn.amount;
             StartCoroutine(SpawnEnemies(spawn));
         }
     }
@@ -71,8 +75,7 @@ public class WaveSpawner : MonoBehaviour
         float randomRate = 0.1f;
         float nightTime = sysData.maxDayTime / 2;
         float spawnInterval = (nightTime * 4 / 5) / spawn.amount;
-        enemyCount += spawn.amount;
-        Debug.Log(enemyCount);
+        
         for (int i = 0; i < spawn.amount; i++)
         {
             float yPos = Random.Range(-1, 2);

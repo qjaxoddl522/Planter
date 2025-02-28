@@ -27,7 +27,7 @@ public class MushroomBullet : MonoBehaviour
                     if (attackable != null)
                     {
                         attackable.TakeDamage(damage, Seed.DefMelee);
-                        attackable.SpeedAffect(-30f, StatModifierType.Percent, 2f);
+                        attackable.SpeedAffect(-50f, StatModifierType.Percent, Seed.DefMelee, 2f);
                     }
                     isDamaged = true;
                     transform.GetComponent<SpriteRenderer>().DOFade(0, 2f).OnComplete(() => Destroy(gameObject));

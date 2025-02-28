@@ -32,7 +32,7 @@ public class Rice : PlantBase
 
     protected override void Ability()
     {
-        Transform target = FindWeakestEnemy();
+        Transform target = FindStrongestEnemy();
         if (target != null)
         {
             Vector2 bulletPos = new Vector2(transform.position.x, transform.position.y + 0.6f);
@@ -47,11 +47,11 @@ public class Rice : PlantBase
         }
     }
 
-    Transform FindWeakestEnemy()
+    Transform FindStrongestEnemy()
     {
         EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
         Transform weakestEnemy = null;
-        int weakestHp = int.MaxValue;
+        int strongestHp = 0;
 
         foreach (EnemyBase enemy in enemies)
         {
@@ -59,9 +59,9 @@ public class Rice : PlantBase
             (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
                 continue;
 
-            if (enemy.MaxHp <= weakestHp && !enemy.IsHidden)
+            if (enemy.MaxHp >= strongestHp && !enemy.IsHidden)
             {
-                weakestHp = enemy.MaxHp;
+                strongestHp = enemy.MaxHp;
                 weakestEnemy = enemy.transform;
             }
         }

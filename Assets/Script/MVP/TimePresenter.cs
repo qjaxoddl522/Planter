@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class TimePresenter : MonoBehaviour
@@ -12,6 +13,7 @@ public class TimePresenter : MonoBehaviour
     [SerializeField] TimeViewSunMoon vTimeSunMoon;
     [SerializeField] TimeViewDark vTimeDark;
     [SerializeField] WaveSpawner waveSpawner;
+    [SerializeField] TextMeshProUGUI dayText;
 
     public static Action OnNightChanged;
     public static bool isDaytime;
@@ -42,18 +44,19 @@ public class TimePresenter : MonoBehaviour
 
     void DayUpdate()
     {
-        if (waveSpawner.IsWaveEnd(mTime.Day))
-        {
-            Debug.Log("Game Clear!");
-            mTime.IsGamePause = true;
-            vTimeSlider.HideSliderHandle();
-            vTimeSunMoon.UpdateIcon(true);
-            vTimeDark.UpdateDarkness(true);
-            return;
-        }
-
         vTimeSunMoon.UpdateIcon(true);
         vTimeDark.UpdateDarkness(true);
+        dayText.text = "Day " + mTime.Day;
+
+        if (waveSpawner.IsWaveEnd(mTime.Day))
+        {
+            mTime.IsGamePause = true;
+            vTimeSlider.HideSliderHandle();
+
+            StartCoroutine(GameProcessManager.Instance.GameClear());
+            return;
+        }
+        
         waveSpawner.InjectWaveInfo(mTime.Day);
         isDaytime = true;
 

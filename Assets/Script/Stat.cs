@@ -11,12 +11,14 @@ public class StatModifier
 {
     public float Value { get; private set; }
     public StatModifierType Type { get; private set; }
+    public Seed Attacker { get; private set; }
     public float Duration { get; private set; }  // 0이면 영구적
 
-    public StatModifier(float value, StatModifierType type, float duration = 0)
+    public StatModifier(float value, StatModifierType type, Seed attacker, float duration = 0)
     {
         Value = value;
         Type = type;
+        Attacker = attacker;
         Duration = duration;
     }
 }
@@ -37,14 +39,19 @@ public class Stat
         {
             float finalValue = BaseValue;
             float percentSum = 0;
+            HashSet<Seed> attackers = new HashSet<Seed>();
 
             // Flat modifier 적용
             foreach (var mod in modifiers)
             {
-                if (mod.Type == StatModifierType.Flat)
-                    finalValue += mod.Value;
-                else if (mod.Type == StatModifierType.Percent)
-                    percentSum += mod.Value;
+                if (!attackers.Contains(mod.Attacker))
+                {
+                    if (mod.Type == StatModifierType.Flat)
+                        finalValue += mod.Value;
+                    else if (mod.Type == StatModifierType.Percent)
+                        percentSum += mod.Value;
+                    attackers.Add(mod.Attacker);
+                }
             }
 
             // 퍼센트 수정은 기본값에 적용

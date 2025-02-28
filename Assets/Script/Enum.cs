@@ -40,6 +40,7 @@ public enum Enemy
     HermitCrab,
     Earthworm,
     Bee,
+    Count,
 }
 
 public enum EnemyState

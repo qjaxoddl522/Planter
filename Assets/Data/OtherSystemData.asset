@@ -16,6 +16,6 @@ MonoBehaviour:
   initTime: 0
   initCoin: 10
   initSpotLength: 1
-  maxSpotLength: 4
+  maxSpotLength: 5
   spotExtendPrice: 5
   fertilizerPrice: 2

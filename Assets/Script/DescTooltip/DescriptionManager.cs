@@ -16,9 +16,12 @@ public class DescriptionManager : MonoBehaviour
 
     public void ShowDescription(DescriptionData data)
     {
-        titleText.text = data.title;
-        descriptionText.text = data.description;
-        descriptionPanel.SetActive(true);
+        if (GameProcessManager.Instance.isGameStart && !GameProcessManager.Instance.isGameEnd)
+        {
+            titleText.text = data.title;
+            descriptionText.text = data.description;
+            descriptionPanel.SetActive(true);
+        }
     }
 
     public void HideDescription()

@@ -19,7 +19,7 @@ MonoBehaviour:
   growthTime: 20
   abilityPeriod: 12
   abilityRange: -1
-  abilityPower: 10
+  abilityPower: 15
   seedSprite: {fileID: 2204643746550681224, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: 397367613, guid: cd95079427e74ec4db52b9650b95a148, type: 3}
   plantPrefab: {fileID: 4469629740500433192, guid: 9d7d5cd316760584c90dbde6c72d02aa, type: 3}

@@ -6,6 +6,7 @@ public class Shovel : MonoBehaviour
     const int grabOrderDiff = 3;
 
     [SerializeField] TimePresenter timePresenter;
+    [SerializeField] CoinPresenter coinPresenter;
     bool isGrabbing = false;
     Vector2 initPos;
     SpriteRenderer spriteRenderer;
@@ -65,6 +66,7 @@ public class Shovel : MonoBehaviour
 
                 if (plantSpot != null && plantSpot.MyPlant != null)
                 {
+                    coinPresenter.GetCoin(plantSpot.MyPlant.plantData.price * 3 / 10);
                     plantSpot.DigOut();
                 }
                 spriteRenderer.sortingOrder -= grabOrderDiff;
@@ -75,10 +77,7 @@ public class Shovel : MonoBehaviour
 
     void ReturnInitPos()
     {
-        if (transform != null)
-            transform.DOLocalMove(initPos, 0.3f).SetEase(Ease.OutCirc);
-        else
-            Debug.LogWarning("Transform NULL!");
+        transform.DOLocalMove(initPos, 0.3f).SetEase(Ease.OutCirc);
     }
 
     void NightChanged()
@@ -87,8 +86,8 @@ public class Shovel : MonoBehaviour
         ReturnInitPos();
     }
 
-    /*void OnDestroy()
+    void OnDestroy()
     {
         TimePresenter.OnNightChanged -= NightChanged;
-    }*/
+    }
 }

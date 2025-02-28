@@ -7,6 +7,7 @@ public class CoinPresenter : MonoBehaviour
 
     [Header("View")]
     [SerializeField] CoinViewText vCoinText;
+    [SerializeField] StaticsManager staticsManager;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class CoinPresenter : MonoBehaviour
 
     public void GetCoin(int amount)
     {
+        staticsManager.coinCount += amount;
         mCoin.Increment(amount);
     }
 

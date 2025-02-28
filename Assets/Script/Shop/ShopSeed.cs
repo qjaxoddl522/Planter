@@ -113,6 +113,7 @@ public class ShopSeed : MonoBehaviour, IShopSeed
 
                 if (plantSpot != null && plantSpot.MyPlant == null && shopManager.TryBuy(plantData.price))
                 {
+                    StaticsManager.plantCount++;
                     plantSpot.Plant(plantData);
                     Instantiate(effectPrefab, spotPos, Quaternion.identity);
                     AudioManager.Instance.PlaySFX(AudioManager.SFX.Pop);

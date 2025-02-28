@@ -35,9 +35,12 @@ public class TooltipManager : MonoBehaviour
 
     public void ShowTooltip(TooltipIconType icon, string text)
     {
-        iconImage.sprite = iconSprites[(int)icon];
-        priceText.text = text;
-        tooltip.SetActive(true);
+        if (GameProcessManager.Instance.isGameStart && !GameProcessManager.Instance.isGameEnd)
+        {
+            iconImage.sprite = iconSprites[(int)icon];
+            priceText.text = text;
+            tooltip.SetActive(true);
+        }
     }
 
     public void HideTooltip()

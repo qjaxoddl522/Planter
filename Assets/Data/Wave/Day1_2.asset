@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnData:
   - enemy: {fileID: 11400000, guid: 198d2828aa7b411438a0e8956b1b99a5, type: 2}
-    amount: 8
-    xPos: 2
+    amount: 4
+    xPos: 0
+  - enemy: {fileID: 11400000, guid: 198d2828aa7b411438a0e8956b1b99a5, type: 2}
+    amount: 4
+    xPos: 1

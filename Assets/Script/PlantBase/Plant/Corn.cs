@@ -7,7 +7,7 @@ public class Corn : PlantBase
 
     protected override void Ability()
     {
-        Transform target = FindClosestEnemy();
+        Transform target = FindWeakestEnemy();
         if (target != null && Mathf.Abs(target.position.x - transform.position.x) <= AttackRange)
         {
             AudioManager.Instance.PlaySFX(AudioManager.SFX.ShootPlant);
@@ -16,5 +16,27 @@ public class Corn : PlantBase
 
             InitCooltime();
         }
+    }
+
+    Transform FindWeakestEnemy()
+    {
+        EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
+        Transform weakestEnemy = null;
+        int weakestHp = int.MaxValue;
+
+        foreach (EnemyBase enemy in enemies)
+        {
+            if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
+            (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
+                continue;
+
+            if (enemy.MaxHp <= weakestHp && !enemy.IsHidden)
+            {
+                weakestHp = enemy.MaxHp;
+                weakestEnemy = enemy.transform;
+            }
+        }
+
+        return weakestEnemy;
     }
 }

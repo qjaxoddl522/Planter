@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Shovel
   m_EditorClassIdentifier: 
   title: "\uC0BD"
-  description: "\uC2EC\uC740 \uC2DD\uBB3C\uC744 \uD30C\uB0C5\uB2C8\uB2E4."
+  description: "\uC2EC\uC740 \uC2DD\uBB3C\uC744 \uD30C\uB0C5\uB2C8\uB2E4.\n30%\uC758
+    \uCF54\uC778\uC744 \uB3CC\uB824\uBC1B\uC2B5\uB2C8\uB2E4."

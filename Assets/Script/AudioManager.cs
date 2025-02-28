@@ -83,7 +83,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(SFX sfx)
     {
-        if (!GameProcessManager.Instance.isGameEnd || sfx == SFX.GameOver)
+        if (!GameProcessManager.Instance.isGameEnd || sfx == SFX.GameOver || sfx == SFX.DayComplete)
         {
             for (int i = 0; i < channels; i++)
             {

@@ -96,14 +96,17 @@ public abstract class PlantBase : MonoBehaviour, IPlantable, IHitable
 
     public void TakeDamage(int damage)
     {
-        Hp -= damage;
-        if (Hp <= 0)
+        if (!GameProcessManager.Instance.isGameEnd)
         {
-            Instantiate(effectPrefab, centerPos, Quaternion.identity);
-            plantSpot.DigOut();
+            Hp -= damage;
+            if (Hp <= 0)
+            {
+                Instantiate(effectPrefab, centerPos, Quaternion.identity);
+                plantSpot.DigOut();
+            }
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.HitPlant);
+            flashEffect.PlayWhiteFlash();
         }
-        AudioManager.Instance.PlaySFX(AudioManager.SFX.HitPlant);
-        flashEffect.PlayWhiteFlash();
     }
 
     public void Heal(int damage)

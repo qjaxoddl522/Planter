@@ -7,7 +7,7 @@ public interface IEnemy
     EnemyData enemyData { get; set; }
     void TakeDamage(int damage, Seed attacker);
     void Heal(int damage);
-    void SpeedAffect(float value, StatModifierType type, float duration);
+    void SpeedAffect(float value, StatModifierType type, Seed attacker, float duration);
     bool IsHidden { get; set; }
 }
 
@@ -192,12 +192,15 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     public abstract void TakeDamage(int damage, Seed attacker);
     public virtual void TakeDamagePostProcessing(Seed attacker)
     {
-        if (Hp <= 0)
+        if (!GameProcessManager.Instance.isGameEnd)
         {
-            DestroyEnemy();
+            if (Hp <= 0)
+            {
+                DestroyEnemy();
+            }
+            flashEffect.PlayWhiteFlash();
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.HitEnemy);
         }
-        flashEffect.PlayWhiteFlash();
-        AudioManager.Instance.PlaySFX(AudioManager.SFX.HitEnemy);
     }
 
     public void Heal(int damage)
@@ -206,9 +209,9 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         Instantiate(healParticlePrefab, transform.position, Quaternion.identity, transform);
     }
 
-    public void SpeedAffect(float value, StatModifierType type, float duration)
+    public void SpeedAffect(float value, StatModifierType type, Seed attacker, float duration)
     {
-        StatModifier speedDebuff = new StatModifier(value, type, duration);
+        StatModifier speedDebuff = new StatModifier(value, type, attacker, duration);
         speed.AddModifier(speedDebuff);
         StartCoroutine(RemoveModifierAfterDuration(speed, speedDebuff, duration));
     }
