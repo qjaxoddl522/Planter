@@ -55,9 +55,9 @@ public class Rice : PlantBase
 
         foreach (EnemyBase enemy in enemies)
         {
-            if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
+            /*if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
             (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
-                continue;
+                continue;*/
 
             if (enemy.MaxHp >= strongestHp && !enemy.IsHidden)
             {

@@ -33,8 +33,12 @@ public class CoinPresenter : MonoBehaviour
 
     public void GetCoin(int amount)
     {
-        staticsManager.coinCount += amount;
-        mCoin.Increment(amount);
+        if (amount > 0)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.EarnCoin);
+            staticsManager.coinCount += amount;
+            mCoin.Increment(amount);
+        }
     }
 
     public void CoinChanged()

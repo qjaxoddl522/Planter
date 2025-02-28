@@ -14,20 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnData:
   - enemy: {fileID: 11400000, guid: efcf4f724b3761340b3adcb198f17860, type: 2}
-    amount: 5
+    amount: 4
     xPos: 0
   - enemy: {fileID: 11400000, guid: efcf4f724b3761340b3adcb198f17860, type: 2}
-    amount: 5
+    amount: 4
     xPos: 1
   - enemy: {fileID: 11400000, guid: 4d3ff9929c8abe14884dc65840009223, type: 2}
-    amount: 20
+    amount: 11
     xPos: 1
   - enemy: {fileID: 11400000, guid: eeee1db0b2b40194cb88a319ac3fc792, type: 2}
-    amount: 20
+    amount: 11
     xPos: 0
   - enemy: {fileID: 11400000, guid: 97ed476e12b29ae41969ecba82930789, type: 2}
-    amount: 8
+    amount: 6
     xPos: 0
-  - enemy: {fileID: 11400000, guid: 97ed476e12b29ae41969ecba82930789, type: 2}
-    amount: 8
-    xPos: 1

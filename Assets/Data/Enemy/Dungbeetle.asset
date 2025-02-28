@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dungbeetle
   m_EditorClassIdentifier: 
   enemyID: 1
-  hp: 15
+  hp: 10
   speed: 0.5
   damage: 1
   range: 1

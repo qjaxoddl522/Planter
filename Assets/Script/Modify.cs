@@ -5,7 +5,7 @@ public static class Modify
 {
     public static int GetDepth(float y)
     {
-        return -(int)(y * 10);
+        return -(int)(y * 100);
     }
 
     public static void Shuffle<T>(this IList<T> list)

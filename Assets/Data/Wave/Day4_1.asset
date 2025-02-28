@@ -17,8 +17,11 @@ MonoBehaviour:
     amount: 6
     xPos: 1
   - enemy: {fileID: 11400000, guid: 4d3ff9929c8abe14884dc65840009223, type: 2}
-    amount: 12
+    amount: 6
     xPos: 1
-  - enemy: {fileID: 11400000, guid: 198d2828aa7b411438a0e8956b1b99a5, type: 2}
-    amount: 20
+  - enemy: {fileID: 11400000, guid: 97ed476e12b29ae41969ecba82930789, type: 2}
+    amount: 3
+    xPos: 1
+  - enemy: {fileID: 11400000, guid: 97ed476e12b29ae41969ecba82930789, type: 2}
+    amount: 7
     xPos: 0

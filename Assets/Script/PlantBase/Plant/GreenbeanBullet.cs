@@ -4,11 +4,13 @@ public class GreenbeanBullet : MonoBehaviour
 {
     int damage;
     Transform target;
+    SpriteRenderer spriteRenderer;
 
     public void Initialize(int damage, Transform target)
     {
         this.damage = damage;
         this.target = target;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -30,5 +32,7 @@ public class GreenbeanBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        spriteRenderer.sortingOrder = Modify.GetDepth(transform.position.y);
     }
 }

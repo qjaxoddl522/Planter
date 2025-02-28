@@ -11,7 +11,8 @@ public class Greenbean : PlantBase
         if (target != null && Mathf.Abs(target.position.x - transform.position.x) <= AttackRange)
         {
             AudioManager.Instance.PlaySFX(AudioManager.SFX.ShootPlant);
-            var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector3 shootPos = new Vector3(transform.position.x, transform.position.y + 0.5f);
+            var bullet = Instantiate(bulletPrefab, shootPos, Quaternion.identity);
             bullet.GetComponent<GreenbeanBullet>().Initialize(Power, target);
 
             InitCooltime();

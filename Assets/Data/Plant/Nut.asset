@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Nut
   m_EditorClassIdentifier: 
   seedID: 4
-  unlockPrice: 15
-  price: 8
-  hp: 55
+  unlockPrice: 14
+  price: 7
+  hp: 50
   growthTime: 15
   abilityPeriod: -1
   abilityRange: 0

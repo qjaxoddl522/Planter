@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6439088110693846973}
   - component: {fileID: 5230454409980600305}
   - component: {fileID: -8621623226330288972}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rice
   m_TagString: Untagged
   m_Icon: {fileID: 0}

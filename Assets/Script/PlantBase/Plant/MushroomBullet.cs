@@ -5,6 +5,7 @@ public class MushroomBullet : MonoBehaviour
 {
     int damage;
     Transform target;
+    SpriteRenderer spriteRenderer;
 
     bool isDamaged = false;
 
@@ -12,6 +13,7 @@ public class MushroomBullet : MonoBehaviour
     {
         this.damage = damage;
         this.target = target;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -37,11 +39,12 @@ public class MushroomBullet : MonoBehaviour
             {
                 transform.position = target.position;
             }
-            
         }
         else
         {
             Destroy(gameObject);
         }
+
+        spriteRenderer.sortingOrder = Modify.GetDepth(transform.position.y);
     }
 }

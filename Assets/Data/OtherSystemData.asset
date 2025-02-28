@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDayTime: 120
   initTime: 0
-  initCoin: 10
+  initCoin: 5
   initSpotLength: 1
   maxSpotLength: 5
   spotExtendPrice: 5

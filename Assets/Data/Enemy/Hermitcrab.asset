@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hermitcrab
   m_EditorClassIdentifier: 
   enemyID: 2
-  hp: 20
+  hp: 15
   speed: 0.4
   damage: 5
   range: 1

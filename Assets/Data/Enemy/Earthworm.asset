@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Earthworm
   m_EditorClassIdentifier: 
   enemyID: 3
-  hp: 15
+  hp: 12
   speed: 0.4
   damage: 2
   range: 1

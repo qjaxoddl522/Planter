@@ -15,10 +15,10 @@ MonoBehaviour:
   seedID: 1
   unlockPrice: 0
   price: 2
-  hp: 10
+  hp: 12
   growthTime: 10
-  abilityPeriod: 2
-  abilityRange: 6
+  abilityPeriod: 2.3
+  abilityRange: 5
   abilityPower: 2
   seedSprite: {fileID: -1567219613, guid: abdbf9f5054097e408e61b9b2a6e8ef0, type: 3}
   plantSprite: {fileID: 3391836386302978847, guid: 4f922da55feb8c349ac3c244ceafde24, type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bee
   m_EditorClassIdentifier: 
   enemyID: 4
-  hp: 10
+  hp: 6
   speed: 0.3
   damage: 1
   range: 1
@@ -21,6 +21,6 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5689919708189584518, guid: 4db430c95fc5dbd418d142a6752903a2, type: 3}
   idleSprite: {fileID: 6683615111705859281, guid: ee092de3ca8de3144ac2f1908fa469a2, type: 3}
   description: {fileID: 11400000, guid: cf160f5d2550f06479ed28d7126c4df8, type: 2}
-  platePower: 3
+  platePower: 5
   plateRange: 3
   platePeriod: 5

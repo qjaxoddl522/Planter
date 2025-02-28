@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Corn : PlantBase
 {
@@ -8,10 +9,11 @@ public class Corn : PlantBase
     protected override void Ability()
     {
         Transform target = FindWeakestEnemy();
-        if (target != null && Mathf.Abs(target.position.x - transform.position.x) <= AttackRange)
+        if (target != null)
         {
             AudioManager.Instance.PlaySFX(AudioManager.SFX.ShootPlant);
-            var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector3 shootPos = new Vector3(transform.position.x, transform.position.y + 0.5f);
+            var bullet = Instantiate(bulletPrefab, shootPos, Quaternion.identity);
             bullet.GetComponent<CornBullet>().Initialize(Power, target);
 
             InitCooltime();
@@ -22,18 +24,26 @@ public class Corn : PlantBase
     {
         EnemyBase[] enemies = FindObjectsByType<EnemyBase>(FindObjectsSortMode.None);
         Transform weakestEnemy = null;
+        float closestDistance = float.MaxValue;
         int weakestHp = int.MaxValue;
 
         foreach (EnemyBase enemy in enemies)
         {
-            if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
+            /*if ((isDirectionLeft && transform.position.x < enemy.transform.position.x) ||
             (!isDirectionLeft && transform.position.x > enemy.transform.position.x))
-                continue;
+                continue;*/
 
-            if (enemy.MaxHp <= weakestHp && !enemy.IsHidden)
+            float distance = Mathf.Abs(transform.position.x - enemy.transform.position.x);
+            if ((enemy.MaxHp < weakestHp ||
+                (enemy.MaxHp == weakestHp && distance < closestDistance)) &&
+                !enemy.IsHidden)
             {
-                weakestHp = enemy.MaxHp;
-                weakestEnemy = enemy.transform;
+                if (Mathf.Abs(enemy.transform.position.x - transform.position.x) <= AttackRange)
+                {
+                    closestDistance = distance;
+                    weakestHp = enemy.MaxHp;
+                    weakestEnemy = enemy.transform;
+                }
             }
         }
 
