@@ -1,6 +1,9 @@
 # Planter
 [만들래] 10분 게임 콘테스트 방치편 출품작
 
+
+[공모전 링크](https://mandlemandle.com/project/planter/game)
+
 ## 🖥️ 프로젝트 소개
 1분 동안 식물을 심고, 1분 동안 방어하여 5일 동안 생존하면 승리하는 게임입니다.
 
